@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Todo-List</title>
+    <script type="module" src="./js/main.js"></script>
+  </head>
+  <body>
+    <div class="Todo-container py-4 px-3 mx-auto">
+      <h1 class="header text-center mb-4">To do List</h1>
+      <div class="input-group mb-3">
+        <input
+          type="text"
+          id="task-input"
+          class="form-control add-text-input"
+          placeholder="Ideas"
+        />
+        <button id="add-button" class="btn btn-primary add-button">Add</button>
+      </div>
+      <ul id="work-list" class="work-list list-group">
+        <li class=" list list-group-item d-flex align-items-center">
+          Read <span class="badge bg-secondary ms-auto delete-task">x</span>
+        </li>
+        <li class="lsit list-group-item d-flex align-items-center">
+          Music <span class="badge bg-secondary ms-auto delete-task">x</span>
+        </li>
+        <li
+          class="list list-group-item d-flex align-items-center active"
+          aria-current="true"
+        >
+          Game <span class="badge bg-light ms-auto delete-task">x</span>
+        </li>
+        <li class="list list-group-item d-flex align-items-center">
+          Eat <span class="badge bg-secondary ms-auto delete-task">x</span>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>
