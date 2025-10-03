@@ -1,44 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Todo-List</title>
-    <script type="module" src="./js/main.js"></script>
-  </head>
-  <body>
-    <div class="Todo-container py-4 px-3 mx-auto">
-      <h1 class="header text-center mb-4">To-Do List</h1>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Professional task management application with priority filtering">
+  <meta name="author" content="Your Company">
+  <title>Professional Task Manager</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <script type="module" src="./js/main.js"></script>
+</head>
+<body>
+  <!-- Main Application Container -->
+  <div class="Todo-container">
+    
+    <!-- Application Header -->
+    <header>
+      <h1 class="header">Task Manager</h1>
+    </header>
 
-      <div class="input-group mb-3">
+    <!-- Task Input Section -->
+    <section class="input-section" aria-label="Add new task">
+      <div class="input-group">
         <input
           type="text"
           id="task-input"
-          class="form-control add-text-input"
-          placeholder="Add your task..."
+          class="form-control"
+          placeholder="What needs to be done?"
+          aria-label="Task description"
+          maxlength="200"
+          autocomplete="off"
         />
         <select
           id="priority-select"
           class="form-select"
-          style="max-width: 150px"
+          aria-label="Task priority"
         >
           <option value="Low" selected>Low</option>
           <option value="Medium">Medium</option>
           <option value="High">High</option>
         </select>
-        <button id="add-button" class="btn btn-primary add-button">Add</button>
+        <button 
+          id="add-button" 
+          class="btn btn-primary add-button"
+          aria-label="Add task"
+        >
+          Add Task
+        </button>
       </div>
+    </section>
 
-      <div class="input-group mb-3">
-        <select id="search-priority" class="form-select">
-          <option value="">Search</option> 
-          <option value="Low">Low</option>
-          <option value="Medium">Medium</option>
-          <option value="High">High</option>
-        </select>
-      </div>
+    <!-- Filter Section -->
+    <section class="filter-section" aria-label="Filter tasks by priority">
+      <label for="search-priority" class="filter-label">
+        Filter by Priority
+      </label>
+      <select 
+        id="search-priority" 
+        class="form-select"
+        aria-label="Filter tasks by priority"
+      >
+        <option value="">All Tasks</option>
+        <option value="Low">Low Priority</option>
+        <option value="Medium">Medium Priority</option>
+        <option value="High">High Priority</option>
+      </select>
+    </section>
 
-      <ul id="work-list" class="work-list list-group"></ul>
-    </div>
-  </body>
+    <!-- Task List Section -->
+    <section aria-label="Task list">
+      <ul id="work-list" class="work-list" role="list"></ul>
+    </section>
+
+  </div>
+
+</body>
 </html>

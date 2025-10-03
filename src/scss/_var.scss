@@ -1,8 +1,29 @@
-$primary-color: #0d6efd; 
-$secondary-color: #6c757d; 
-$background-color: #f8f9fa;
+// Color Variables
+$primary-color: #667eea;
+$secondary-color: #a0aec0;
+$background-color: #f7fafc;
 $card-background: #ffffff;
-$shadow-light: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-$list-active-color: #ffffff;
 
+// Priority Colors
+$priority-high: #fc8181;
+$priority-medium: #f6ad55;
+$priority-low: #68d391;
 
+// Text Colors
+$text-primary: #2d3748;
+$text-secondary: #4a5568;
+$text-muted: #a0aec0;
+
+// Shadow Variables
+$shadow-light: 0 4px 6px rgba(0, 0, 0, 0.07);
+$shadow-medium: 0 10px 25px rgba(0, 0, 0, 0.1);
+$shadow-hover: 0 8px 20px rgba(102, 126, 234, 0.15);
+
+// Border Variables
+$border-radius: 0.75rem;
+$border-radius-small: 0.5rem;
+$border-color: #e2e8f0;
+
+// Spacing
+$container-padding: 2.5rem;
+$element-gap: 1rem;
