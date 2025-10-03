@@ -8,27 +8,37 @@
   </head>
   <body>
     <div class="Todo-container py-4 px-3 mx-auto">
-      <h1 class="header text-center mb-4">To do List</h1>
+      <h1 class="header text-center mb-4">To-Do List</h1>
+
       <div class="input-group mb-3">
         <input
           type="text"
           id="task-input"
           class="form-control add-text-input"
-          placeholder="Ideas"
+          placeholder="Add your task..."
         />
+        <select
+          id="priority-select"
+          class="form-select"
+          style="max-width: 150px"
+        >
+          <option value="Low" selected>Low</option>
+          <option value="Medium">Medium</option>
+          <option value="High">High</option>
+        </select>
         <button id="add-button" class="btn btn-primary add-button">Add</button>
       </div>
-      <ul id="work-list" class="work-list list-group">
-        <li class="lsit list-group-item d-flex align-items-center">
-          Music <span class="badge bg-secondary ms-auto delete-task">x</span>
-        </li>
-        <li
-          class="list list-group-item d-flex align-items-center active"
-          aria-current="true"
-        >
-          Game <span class="badge bg-light ms-auto delete-task">x</span>
-        </li>
-      </ul>
+
+      <div class="input-group mb-3">
+        <select id="search-priority" class="form-select">
+          <option value="">Search</option> 
+          <option value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="High">High</option>
+        </select>
+      </div>
+
+      <ul id="work-list" class="work-list list-group"></ul>
     </div>
   </body>
 </html>

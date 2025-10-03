@@ -1,69 +1,115 @@
+@use "var" as v;
 
-@use "var";
+// Import Bootstrap
 @import "bootstrap/scss/bootstrap";
 
-
-
 body {
-  font-family: sans-serif;
-  background-color: var.$background-color;
-  height: 100vh;
+  font-family: "Inter", sans-serif;
+  background-color: v.$background-color;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  padding-top: 3rem;
 }
-
 
 .Todo-container {
   max-width: 700px;
-  background: blue;
-  padding: 2rem;
-  border-radius: 1rem;
-  box-shadow: var.$shadow-light;
   width: 100%;
+  background: v.$card-background;
+  padding: 2rem 2.5rem;
+  border-radius: 1rem;
+  box-shadow: v.$shadow-light;
 
-  h1 {
-    color: var.$primary-color;
+  h1.header {
+    color: v.$primary-color;
     font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 2rem;
   }
 
-  .form-control {
-    background-color: var.$background-color;
-    border: 1px solid #ced4da;
-    &:focus {
-      box-shadow: 0 0 0 0.25rem rgba(var.$primary-color, 0.25);
+  .input-group {
+    input.form-control {
+      border-radius: 0.5rem 0 0 0.5rem;
+      border: 1px solid #ced4da;
+      font-size: 1rem;
+      &:focus {
+        border-color: v.$primary-color;
+        box-shadow: 0 0 0 0.25rem rgba(v.$primary-color, 0.25); // optional: rgba can use original variable if you define
+      }
+    }
+
+    button.add-button {
+      border-radius: 0 0.5rem 0.5rem 0;
+      font-weight: 500;
+      transition: all 0.2s ease-in-out;
+      &:hover {
+        background-color: darken(v.$primary-color, 10%);
+      }
     }
   }
 
-  .add-button {
-    font-weight: 500;
-    transition: var.$background-color 0.2s ease-in-out;
-  }
-
   .work-list {
+    margin-top: 1.5rem;
+
     .list-group-item {
-      padding: 1rem 1.25rem;
-      border: 1px solid #dee2e6;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1rem;
       border-radius: 0.5rem;
       margin-bottom: 0.5rem;
+      background-color: v.$card-background;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
       transition: all 0.2s ease-in-out;
       cursor: pointer;
 
       &:hover {
-        background-color: #f1f1f1;
-        transform: translateX(5px);
+        transform: translateX(3px);
+        background-color: lighten(v.$background-color, 5%);
       }
 
-    
-      &.active {
-        background-color: var.$primary-color;
-        border-color: var.$primary-color;
-        color: var.$list-active-color;
+      .task-text {
+        font-weight: 500;
+      }
+
+      .badge {
+        font-size: 0.75rem;
+        padding: 0.35em 0.6em;
+        border-radius: 0.5rem;
+        margin-left: 0.25rem;
+      }
+
+      .bg-secondary {
+        background-color: v.$secondary-color !important;
+      }
+
+      &.active .task-text {
         text-decoration: line-through;
-        .badge {
-          background-color: rgba(var.$list-active-color, 0.2);
-        }
+        color: v.$secondary-color;
       }
     }
   }
+
+  .alert {
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+    text-align: center;
+  }
+}
+
+.priority-badge.low {
+  background-color: #6c757d; // gray
+  color: #fff;
+}
+
+.priority-badge.medium {
+  background-color: #ffc107; // yellow
+  color: #000;
+}
+
+.priority-badge.high {
+  background-color: #dc3545; // red
+  color: #fff;
 }
