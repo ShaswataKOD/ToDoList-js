@@ -1,69 +1,362 @@
+@use "var" as v;
 
-@use "var";
+// Import Bootstrap
 @import "bootstrap/scss/bootstrap";
 
-
-
-body {
-  font-family: sans-serif;
-  background-color: var.$background-color;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+// Global Styles
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  background: linear-gradient(
+    135deg,
+    v.$primary-color 0%,
+    darken(v.$primary-color, 15%) 100%
+  );
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2rem 1rem;
+}
 
+// Main Container
 .Todo-container {
   max-width: 700px;
-  background: blue;
-  padding: 2rem;
-  border-radius: 1rem;
-  box-shadow: var.$shadow-light;
   width: 100%;
+  background: v.$card-background;
+  padding: v.$container-padding;
+  border-radius: 1.25rem;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
 
-  h1 {
-    color: var.$primary-color;
+  // Header
+  h1.header {
+    font-size: 2.5rem;
     font-weight: 700;
+    color: v.$text-primary;
+    text-align: center;
+    margin-bottom: 2rem;
+    background: linear-gradient(
+      135deg,
+      v.$primary-color 0%,
+      darken(v.$primary-color, 15%) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.5px;
   }
 
-  .form-control {
-    background-color: var.$background-color;
-    border: 1px solid #ced4da;
-    &:focus {
-      box-shadow: 0 0 0 0.25rem rgba(var.$primary-color, 0.25);
+  // Input Section
+  .input-section {
+    background: v.$background-color;
+    padding: 1.5rem;
+    border-radius: v.$border-radius;
+
+    .input-group {
+      input.form-control {
+        border: 2px solid v.$border-color;
+        border-radius: 0.625rem 0 0 0.625rem;
+        padding: 0.75rem 1rem;
+        font-size: 0.9375rem;
+        transition: all 0.3s ease;
+
+        &:focus {
+          border-color: v.$primary-color;
+          box-shadow: 0 0 0 3px rgba(v.$primary-color, 0.1);
+          outline: none;
+        }
+
+        &::placeholder {
+          color: v.$text-muted;
+        }
+      }
+
+      select.form-select {
+        border: 2px solid v.$border-color;
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+        max-width: 150px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+
+        &:focus {
+          border-color: v.$primary-color;
+          box-shadow: 0 0 0 3px rgba(v.$primary-color, 0.1);
+          outline: none;
+        }
+      }
+
+      button.add-button {
+        border-radius: 0 0.625rem 0.625rem 0;
+        border: none;
+        padding: 0.75rem 1.875rem;
+        font-weight: 600;
+        font-size: 0.9375rem;
+        background: linear-gradient(
+          135deg,
+          v.$primary-color 0%,
+          darken(v.$primary-color, 15%) 100%
+        );
+        transition: all 0.3s ease;
+
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: v.$shadow-hover;
+        }
+
+        &:active {
+          transform: translateY(0);
+        }
+      }
     }
   }
 
-  .add-button {
-    font-weight: 500;
-    transition: var.$background-color 0.2s ease-in-out;
+  // Filter Section
+  .filter-section {
+    margin-bottom: 1.5rem;
+
+    .filter-label {
+      font-weight: 600;
+      color: v.$text-secondary;
+      font-size: 16px;
+      display: block;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    select.form-select {
+      border: 2px solid v.$border-color;
+      border-radius: 0.625rem;
+      padding: 0.75rem 1rem;
+      font-size: 0.9375rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      background-color: v.$card-background;
+
+      &:focus {
+        border-color: v.$primary-color;
+        box-shadow: 0 0 0 3px rgba(v.$primary-color, 0.1);
+        outline: none;
+      }
+    }
   }
 
+  // Task List
   .work-list {
-    .list-group-item {
-      padding: 1rem 1.25rem;
-      border: 1px solid #dee2e6;
-      border-radius: 0.5rem;
-      margin-bottom: 0.5rem;
-      transition: all 0.2s ease-in-out;
+    list-style: none;
+    padding: 0;
+
+    .task-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.25rem;
+      // margin-bottom: 0.9375rem;
+      gap: 1rem;
+      background: v.$card-background;
+      border: 2px solid v.$border-color;
+      border-radius: v.$border-radius;
+      transition: all 0.3s ease;
       cursor: pointer;
 
       &:hover {
-        background-color: #f1f1f1;
-        transform: translateX(5px);
+        border-color: v.$primary-color;
+        box-shadow: v.$shadow-hover;
+        transform: translateY(-2px);
       }
 
-    
-      &.active {
-        background-color: var.$primary-color;
-        border-color: var.$primary-color;
-        color: var.$list-active-color;
-        text-decoration: line-through;
-        .badge {
-          background-color: rgba(var.$list-active-color, 0.2);
+      &.completed {
+        opacity: 0.6;
+        background: v.$background-color;
+
+        .task-text {
+          text-decoration: line-through;
+          color: v.$text-muted;
         }
       }
+
+      // Task Content
+      .task-content {
+        flex: 1;
+        min-width: 0;
+
+        .task-main {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          margin-bottom: 0.5rem;
+          flex-wrap: wrap;
+
+          .task-text {
+            font-size: 1rem;
+            font-weight: 500;
+            color: v.$text-primary;
+            word-break: break-word;
+            flex: 1;
+            min-width: 0;
+          }
+
+          .priority-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 1.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+
+            &.bg-high {
+              background-color: v.$priority-high;
+              color: white;
+            }
+
+            &.bg-medium {
+              background-color: v.$priority-medium;
+              color: white;
+            }
+
+            &.bg-low {
+              background-color: v.$priority-low;
+              color: white;
+            }
+          }
+        }
+
+        .task-timestamp {
+          font-size: 0.8125rem;
+          color: v.$text-muted;
+        }
+      }
+
+      // Task Actions
+      .task-actions {
+        display: flex;
+        gap: 0.5rem;
+        margin-left: 1rem;
+
+        button {
+          border-radius: 0.5rem;
+          padding: 0.5rem 1rem;
+          transition: all 0.3s ease;
+          border: none;
+          font-weight: 500;
+          font-size: 0.875rem;
+          white-space: nowrap;
+
+          &:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+          }
+
+          &:active {
+            transform: translateY(0);
+          }
+
+          &.edit-task {
+            background-color: v.$primary-color;
+            color: white;
+
+            &:hover {
+              background-color: darken(v.$primary-color, 10%);
+            }
+          }
+
+          &.delete-task {
+            background-color: v.$priority-high;
+            color: white;
+
+            &:hover {
+              background-color: darken(v.$priority-high, 10%);
+            }
+          }
+        }
+      }
+    }
+
+    // Empty State
+    .list-group-item.text-center {
+      padding: 3rem 1.5rem;
+      border: 2px dashed v.$border-color;
+      border-radius: v.$border-radius;
+      color: v.$text-muted;
+      font-size: 1rem;
+      background: v.$background-color;
+    }
+  }
+
+  // Alert Messages
+  .alert {
+    border-radius: v.$border-radius-small;
+    font-size: 0.9rem;
+    text-align: center;
+    box-shadow: v.$shadow-light;
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  body {
+    padding: 1rem;
+  }
+
+  .Todo-container {
+    padding: 1.5rem;
+
+    h1.header {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .input-section {
+      padding: 1rem;
+
+      .input-group {
+        flex-wrap: wrap;
+
+        input.form-control {
+          border-radius: 0.625rem;
+          margin-bottom: 0.5rem;
+        }
+
+        select.form-select {
+          border-radius: 0.625rem;
+          max-width: 100%;
+          margin-bottom: 0.5rem;
+        }
+
+        button.add-button {
+          border-radius: 0.625rem;
+          width: 100%;
+        }
+      }
+    }
+
+    .work-list .task-item {
+      flex-direction: column;
+      align-items: flex-start;
+
+      .task-actions {
+        margin-left: 0;
+        margin-top: 1rem;
+        width: 100%;
+        justify-content: flex-end;
+      }
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .Todo-container {
+    padding: 1.25rem;
+
+    h1.header {
+      font-size: 1.75rem;
     }
   }
 }
