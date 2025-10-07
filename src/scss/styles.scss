@@ -1,9 +1,7 @@
 @use "var" as v;
-
-// Import Bootstrap
 @import "bootstrap/scss/bootstrap";
 
-// Global Styles
+// Global
 * {
   margin: 0;
   padding: 0;
@@ -23,6 +21,7 @@ body {
   justify-content: center;
   align-items: flex-start;
   padding: 2rem 1rem;
+  // overflow-y: auto;
 }
 
 // Main Container
@@ -33,6 +32,7 @@ body {
   padding: v.$container-padding;
   border-radius: 1.25rem;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  
 
   // Header
   h1.header {
@@ -151,6 +151,7 @@ body {
   .work-list {
     list-style: none;
     padding: 0;
+    overflow-y: scroll;
 
     .task-item {
       display: flex;
@@ -290,7 +291,6 @@ body {
     }
   }
 
-  // Alert Messages
   .alert {
     border-radius: v.$border-radius-small;
     font-size: 0.9rem;
@@ -299,7 +299,6 @@ body {
   }
 }
 
-// Responsive Design
 @media (max-width: 768px) {
   body {
     padding: 1rem;

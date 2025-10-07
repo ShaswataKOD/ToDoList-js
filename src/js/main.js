@@ -5,15 +5,16 @@ import { getTasks, addTask, updateTask, deleteTask } from "./api.js";
 document.addEventListener("DOMContentLoaded", () => {
   // DOM Elements
   const taskInput = document.getElementById("task-input");
+  const tagsInput = document.getElementById("tags-input"); 
   const addButton = document.getElementById("add-button");
   const workList = document.getElementById("work-list");
   const prioritySelect = document.getElementById("priority-select");
   const searchPriority = document.getElementById("search-priority");
+  const searchTags = document.getElementById("search-tags");
 
-  // Application State
+
   let tasks = [];
 
-  // Initialize Application
   init();
 
   async function init() {
@@ -28,6 +29,8 @@ document.addEventListener("DOMContentLoaded", () => {
       if (e.key === "Enter") handleAddTask();
     });
     searchPriority.addEventListener("change", displayAllTasks);
+    searchTags.addEventListener("input", displayTasksByTag);
+
   }
 
   async function loadTasksFromServer() {
@@ -44,16 +47,22 @@ document.addEventListener("DOMContentLoaded", () => {
   async function handleAddTask() {
     const title = taskInput.value.trim();
     const priority = prioritySelect.value;
+    const tagsRaw = tagsInput.value.trim();
 
     if (!title) {
       showMessage("Please enter a task.", "warning");
       return;
     }
 
+    const tags = tagsRaw
+      ? tagsRaw.split(",").map(tag => tag.trim()).filter(Boolean)
+      : [];
+
     try {
-      const newTask = await addTask(title, priority);
+      const newTask = await addTask(title, priority, tags);
       tasks.push(newTask);
       taskInput.value = "";
+      tagsInput.value = "";
       prioritySelect.value = "Low";
       taskInput.focus();
       showMessage("Task added successfully!", "success");
@@ -82,11 +91,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function handleEditTask(task) {
     const newTitle = prompt("Edit your task:", task.title);
-    
-    if (newTitle === null) {
-      // User clicked cancel
-      return;
-    }
+    if (newTitle === null) return;
+
+    const newTagsRaw = prompt(
+      "Edit tags (comma-separated):",
+      task.tags ? task.tags.join(", ") : ""
+    );
+    const newTags = newTagsRaw
+      ? newTagsRaw.split(",").map(tag => tag.trim()).filter(Boolean)
+      : [];
 
     if (newTitle.trim() === "") {
       showMessage("Task title cannot be empty.", "warning");
@@ -98,13 +111,14 @@ document.addEventListener("DOMContentLoaded", () => {
         title: newTitle.trim(),
         priority: task.priority,
         completed: task.completed,
+        tags: newTags,
       });
-      
+
       const index = tasks.findIndex((t) => t.id === task.id);
       if (index !== -1) {
         tasks[index] = updatedTask;
       }
-      
+
       showMessage("Task updated successfully!", "success");
       displayAllTasks();
     } catch (error) {
@@ -119,13 +133,14 @@ document.addEventListener("DOMContentLoaded", () => {
         title: task.title,
         priority: task.priority,
         completed: !task.completed,
+        tags: task.tags || [],
       });
-      
+
       const index = tasks.findIndex((t) => t.id === task.id);
       if (index !== -1) {
         tasks[index] = updatedTask;
       }
-      
+
       displayAllTasks();
     } catch (error) {
       showMessage("Failed to update task.", "danger");
@@ -143,6 +158,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const priorityClass = task.priority.toLowerCase();
 
+    const tagsHtml = (task.tags || [])
+      .map(tag => `<span class="badge bg-secondary me-1">${escapeHtml(tag)}</span>`)
+      .join("");
+
     li.innerHTML = `
       <div class="task-content">
         <div class="task-main">
@@ -155,6 +174,7 @@ document.addEventListener("DOMContentLoaded", () => {
             ${task.priority}
           </span>
         </div>
+        <div class="task-tags mt-1">${tagsHtml}</div>
         <small class="task-timestamp">${formatTimestamp(task.timestamp)}</small>
       </div>
       <div class="task-actions">
@@ -167,7 +187,6 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
     `;
 
-    // Attach event listeners
     li.querySelector(".delete-task").addEventListener("click", (e) => {
       e.stopPropagation();
       handleDeleteTask(task.id);
@@ -220,7 +239,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function showMessage(msg, type = "info") {
     const alert = document.createElement("div");
     alert.className = `alert alert-${type} alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3`;
-    alert.style.zIndex = "9999";
+    // alert.style.zIndex = "9999";
     alert.style.minWidth = "300px";
     alert.innerHTML = `
       <span>${msg}</span>
@@ -240,3 +259,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return div.innerHTML;
   }
 });
+
+
+

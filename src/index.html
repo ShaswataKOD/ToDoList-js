@@ -1,78 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Professional task management application with priority filtering">
-  <meta name="author" content="Your Company">
-  <title>To Do list</title>
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <script type="module" src="./js/main.js"></script>
-</head>
-<body>
-  <!-- Main Application Container -->
-  <div class="Todo-container">
-    
-    <!-- Application Header -->
-    <header>
-      <h1 class="header">Todo list</h1>
-    </header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Professional task management application with priority and tags"
+    />
+    <meta name="author" content="Your Company" />
+    <title>To Do List</title>
 
-    <!-- Task Input Section -->
-    <section class="input-section" aria-label="Add new task">
-      <div class="input-group">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <script type="module" src="./js/main.js"></script>
+  </head>
+  <body>
+    <!-- Main Application Container -->
+    <div class="Todo-container">
+      <!-- Application Header -->
+      <header>
+        <h1 class="header">Todo List</h1>
+      </header>
+
+      <!-- Task Input Section -->
+      <section class="input-section" aria-label="Add new task">
+        <div class="input-group">
+          <input
+            type="text"
+            id="task-input"
+            class="form-control"
+            placeholder="What needs to be done?"
+            aria-label="Task description"
+            maxlength="200"
+            autocomplete="off"
+          />
+          <select
+            id="priority-select"
+            class="form-select"
+            aria-label="Task priority"
+          >
+            <option value="Low" selected>Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+          </select>
+          <input
+            type="text"
+            id="tags-input"
+            class="form-control"
+            placeholder="Enter tags (comma-separated)"
+            aria-label="Task tags"
+            maxlength="100"
+            autocomplete="off"
+          />
+          <button
+            id="add-button"
+            class="btn btn-primary add-button"
+            aria-label="Add task"
+          >
+            Add Task
+          </button>
+        </div>
+      </section>
+
+      <!-- Filter by priority Section -->
+      <section class="filter-section" aria-label="Filter tasks by priority">
+        <label for="search-priority" class="filter-label">
+          Filter by Priority
+        </label>
+        <select
+          id="search-priority"
+          class="form-select"
+          aria-label="Filter tasks by priority"
+        >
+          <option value="">All Tasks</option>
+          <option value="Low">Low Priority</option>
+          <option value="Medium">Medium Priority</option>
+          <option value="High">High Priority</option>
+        </select>
+      </section>
+
+      <!-- filter by tags -->
+      <div id="filter-section" class="mb-3">
+        <label for="search-tags" class="form-label"
+          >Search by Tags (comma separated):</label
+        >
         <input
           type="text"
-          id="task-input"
+          id="search-tags"
           class="form-control"
-          placeholder="What needs to be done?"
-          aria-label="Task description"
-          maxlength="200"
-          autocomplete="off"
+          placeholder="e.g. casual, urgent"
         />
-        <select
-          id="priority-select"
-          class="form-select"
-          aria-label="Task priority"
-        >
-          <option value="Low" selected>Low</option>
-          <option value="Medium">Medium</option>
-          <option value="High">High</option>
-        </select>
-        <button 
-          id="add-button" 
-          class="btn btn-primary add-button"
-          aria-label="Add task"
-        >
-          Add Task
-        </button>
       </div>
-    </section>
 
-    <!-- Filter Section -->
-    <section class="filter-section" aria-label="Filter tasks by priority">
-      <label for="search-priority" class="filter-label">
-        Filter by Priority
-      </label>
-      <select 
-        id="search-priority" 
-        class="form-select"
-        aria-label="Filter tasks by priority"
-      >
-        <option value="">All Tasks</option>
-        <option value="Low">Low Priority</option>
-        <option value="Medium">Medium Priority</option>
-        <option value="High">High Priority</option>
-      </select>
-    </section>
-
-    <!-- Task List Section -->
-    <section aria-label="Task list">
-      <ul id="work-list" class="work-list" role="list"></ul>
-    </section>
-
-  </div>
-
-</body>
+      <!-- Task List Section -->
+      <section aria-label="Task list">
+        <ul id="work-list" class="work-list" role="list"></ul>
+      </section>
+    </div>
+  </body>
 </html>
