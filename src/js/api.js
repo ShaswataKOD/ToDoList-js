@@ -16,30 +16,58 @@ const API_URL = "http://localhost:5000/api/tasks";
 //   }
 // }
 
-export async function getTasks(tags = []) {
+// export async function getTasks(tags = []) {
+//   try {
+//     let url = API_URL;
+
+//     if (tags.length > 0) {
+//       const tagParams = tags.map(tag => encodeURIComponent(tag)).join(",");
+//       url += `?tags=${tagParams}`;
+//     }
+
+//     const res = await fetch(url);
+
+//     if (!res.ok) {
+//       const error = await res.text();
+//       console.error("Failed to fetch tasks:", error);
+//       throw new Error("Failed to fetch tasks");
+//     }
+
+//     return res.json();
+//   } catch (error) {
+//     console.error("Error in getTasks:", error);
+//     throw error;
+//   }
+// }
+
+export async function getTasks({ tags = [], priority = '', title = '' } = {}) {
   try {
-    let url = API_URL;
+    const params = new URLSearchParams();
 
     if (tags.length > 0) {
-      const tagParams = tags.map(tag => encodeURIComponent(tag)).join(",");
-      url += `?tags=${tagParams}`;
+      params.append('tags', tags.join(','));
     }
+    if (priority) {
+      params.append('priority', priority);
+    }
+    if (title) {
+      params.append('title', title);
+    }
+
+    const url = params.toString() ? `${API_URL}?${params.toString()}` : API_URL;
 
     const res = await fetch(url);
-
     if (!res.ok) {
       const error = await res.text();
-      console.error("Failed to fetch tasks:", error);
-      throw new Error("Failed to fetch tasks");
+      console.error('Failed to fetch tasks:', error);
+      throw new Error('Failed to fetch tasks');
     }
-
     return res.json();
   } catch (error) {
-    console.error("Error in getTasks:", error);
+    console.error('Error in getTasks:', error);
     throw error;
   }
 }
-
 
 //adding new task (including tags)
 export async function addTask(title, priority, tags = []) {

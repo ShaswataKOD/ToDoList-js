@@ -5,13 +5,13 @@ import { getTasks, addTask, updateTask, deleteTask } from "./api.js";
 document.addEventListener("DOMContentLoaded", () => {
   // DOM Elements
   const taskInput = document.getElementById("task-input");
-  const tagsInput = document.getElementById("tags-input"); 
+  const tagsInput = document.getElementById("tags-input");
   const addButton = document.getElementById("add-button");
   const workList = document.getElementById("work-list");
   const prioritySelect = document.getElementById("priority-select");
   const searchPriority = document.getElementById("search-priority");
   const searchTags = document.getElementById("search-tags");
-
+  const searchTitle = document.getElementById("search-title"); // add input for title search
 
   let tasks = [];
 
@@ -22,26 +22,54 @@ document.addEventListener("DOMContentLoaded", () => {
     displayAllTasks();
     attachEventListeners();
   }
-
   function attachEventListeners() {
     addButton.addEventListener("click", handleAddTask);
     taskInput.addEventListener("keypress", (e) => {
       if (e.key === "Enter") handleAddTask();
     });
-    searchPriority.addEventListener("change", displayAllTasks);
-    searchTags.addEventListener("input", displayTasksByTag);
 
+    
+    searchPriority.addEventListener("change", handleSearch);
+    searchTags.addEventListener("input", debounce(handleSearch, 300));
+    if (searchTitle)
+      searchTitle.addEventListener("input", debounce(handleSearch, 300));
   }
 
-  async function loadTasksFromServer() {
+  async function loadTasksFromServer(filters = {}) {
     try {
-      tasks = await getTasks();
+      tasks = await getTasks(filters);
       console.log("Tasks loaded:", tasks);
     } catch (error) {
       showMessage("Failed to load tasks from server", "danger");
       console.error("Load error:", error);
       tasks = [];
     }
+  }
+
+  async function handleSearch() {
+    // parse inputs
+    const priority = searchPriority.value;
+    const tagsRaw = searchTags.value.trim();
+    const title = searchTitle ? searchTitle.value.trim() : "";
+
+    const tags = tagsRaw
+      ? tagsRaw
+          .split(",")
+          .map((tag) => tag.trim())
+          .filter(Boolean)
+      : [];
+
+    // load tasks with filters from server
+    await loadTasksFromServer({ tags, priority, title });
+    displayAllTasks();
+  }
+
+  function debounce(fn, delay) {
+    let timeout;
+    return (...args) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => fn(...args), delay);
+    };
   }
 
   async function handleAddTask() {
@@ -55,7 +83,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const tags = tagsRaw
-      ? tagsRaw.split(",").map(tag => tag.trim()).filter(Boolean)
+      ? tagsRaw
+          .split(",")
+          .map((tag) => tag.trim())
+          .filter(Boolean)
       : [];
 
     try {
@@ -98,7 +129,10 @@ document.addEventListener("DOMContentLoaded", () => {
       task.tags ? task.tags.join(", ") : ""
     );
     const newTags = newTagsRaw
-      ? newTagsRaw.split(",").map(tag => tag.trim()).filter(Boolean)
+      ? newTagsRaw
+          .split(",")
+          .map((tag) => tag.trim())
+          .filter(Boolean)
       : [];
 
     if (newTitle.trim() === "") {
@@ -159,7 +193,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const priorityClass = task.priority.toLowerCase();
 
     const tagsHtml = (task.tags || [])
-      .map(tag => `<span class="badge bg-secondary me-1">${escapeHtml(tag)}</span>`)
+      .map(
+        (tag) =>
+          `<span class="badge bg-secondary me-1">${escapeHtml(tag)}</span>`
+      )
       .join("");
 
     li.innerHTML = `
@@ -206,27 +243,43 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function displayAllTasks() {
-    workList.innerHTML = "";
-    const filter = searchPriority.value;
+  workList.innerHTML = "";
 
-    const filteredTasks = filter
-      ? tasks.filter((task) => task.priority === filter)
-      : tasks;
-
-    if (filteredTasks.length === 0) {
-      const empty = document.createElement("li");
-      empty.className = "list-group-item text-center text-muted";
-      empty.textContent = filter
-        ? `No tasks with ${filter} priority`
-        : "No tasks yet. Add one to get started!";
-      workList.appendChild(empty);
-      return;
-    }
-
-    filteredTasks.forEach((task) => {
-      workList.appendChild(createTaskElement(task));
-    });
+  if (tasks.length === 0) {
+    const empty = document.createElement("li");
+    empty.className = "list-group-item text-center text-muted";
+    empty.textContent = "No tasks found. Try adjusting your filters or add a new task.";
+    workList.appendChild(empty);
+    return;
   }
+
+  tasks.forEach((task) => {
+    workList.appendChild(createTaskElement(task));
+  });
+}
+
+  // function displayAllTasks() {
+  //   workList.innerHTML = "";
+  //   const filter = searchPriority.value;
+
+  //   const filteredTasks = filter
+  //     ? tasks.filter((task) => task.priority === filter)
+  //     : tasks;
+
+  //   if (filteredTasks.length === 0) {
+  //     const empty = document.createElement("li");
+  //     empty.className = "list-group-item text-center text-muted";
+  //     empty.textContent = filter
+  //       ? `No tasks with ${filter} priority`
+  //       : "No tasks yet. Add one to get started!";
+  //     workList.appendChild(empty);
+  //     return;
+  //   }
+
+  //   filteredTasks.forEach((task) => {
+  //     workList.appendChild(createTaskElement(task));
+  //   });
+  // }
 
   function formatTimestamp(timestamp) {
     try {
@@ -239,7 +292,6 @@ document.addEventListener("DOMContentLoaded", () => {
   function showMessage(msg, type = "info") {
     const alert = document.createElement("div");
     alert.className = `alert alert-${type} alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3`;
-    // alert.style.zIndex = "9999";
     alert.style.minWidth = "300px";
     alert.innerHTML = `
       <span>${msg}</span>
@@ -259,6 +311,3 @@ document.addEventListener("DOMContentLoaded", () => {
     return div.innerHTML;
   }
 });
-
-
-

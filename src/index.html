@@ -61,39 +61,51 @@
         </div>
       </section>
 
-      <!-- Filter by priority Section -->
-      <section class="filter-section" aria-label="Filter tasks by priority">
-        <label for="search-priority" class="filter-label">
-          Filter by Priority
-        </label>
-        <select
-          id="search-priority"
-          class="form-select"
-          aria-label="Filter tasks by priority"
-        >
-          <option value="">All Tasks</option>
-          <option value="Low">Low Priority</option>
-          <option value="Medium">Medium Priority</option>
-          <option value="High">High Priority</option>
-        </select>
-      </section>
+      <!-- Filter Section -->
+      <section class="filter-section" aria-label="Filter tasks">
+        <!-- Filter by Priority -->
+        <div class="mb-3">
+          <label for="search-priority" class="form-label">Filter by Priority:</label>
+          <select
+            id="search-priority"
+            class="form-select"
+            aria-label="Filter tasks by priority"
+          >
+            <option value="">All Tasks</option>
+            <option value="Low">Low Priority</option>
+            <option value="Medium">Medium Priority</option>
+            <option value="High">High Priority</option>
+          </select>
+        </div>
 
-      <!-- filter by tags -->
-      <div id="filter-section" class="mb-3">
-        <label for="search-tags" class="form-label"
-          >Search by Tags (comma separated):</label
-        >
-        <input
-          type="text"
-          id="search-tags"
-          class="form-control"
-          placeholder="e.g. casual, urgent"
-        />
-      </div>
+        <!-- Search by Title -->
+        <div class="mb-3">
+          <label for="search-title" class="form-label">Search by Title:</label>
+          <input
+            type="text"
+            id="search-title"
+            class="form-control"
+            placeholder="Search tasks by title"
+            autocomplete="off"
+          />
+        </div>
+
+        <!-- Search by Tags -->
+        <div class="mb-3">
+          <label for="search-tags" class="form-label">Search by Tags:</label>
+          <input
+            type="text"
+            id="search-tags"
+            class="form-control"
+            placeholder="Search by tags (comma-separated)"
+            autocomplete="off"
+          />
+        </div>
+      </section>
 
       <!-- Task List Section -->
       <section aria-label="Task list">
-        <ul id="work-list" class="work-list" role="list"></ul>
+        <ul id="work-list" class="work-list list-group" role="list"></ul>
       </section>
     </div>
   </body>
