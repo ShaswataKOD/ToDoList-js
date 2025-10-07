@@ -258,37 +258,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // function displayAllTasks() {
-  //   workList.innerHTML = "";
-  //   const filter = searchPriority.value;
-
-  //   const filteredTasks = filter
-  //     ? tasks.filter((task) => task.priority === filter)
-  //     : tasks;
-
-  //   if (filteredTasks.length === 0) {
-  //     const empty = document.createElement("li");
-  //     empty.className = "list-group-item text-center text-muted";
-  //     empty.textContent = filter
-  //       ? `No tasks with ${filter} priority`
-  //       : "No tasks yet. Add one to get started!";
-  //     workList.appendChild(empty);
-  //     return;
-  //   }
-
-  //   filteredTasks.forEach((task) => {
-  //     workList.appendChild(createTaskElement(task));
-  //   });
-  // }
-
-  // function formatTimestamp(timestamp) {
-  //   try {
-  //     return new Date(timestamp).toLocaleString();
-  //   } catch (error) {
-  //     return timestamp;
-  //   }
-  // }
-
   function showMessage(msg, type = "info") {
     const alert = document.createElement("div");
     alert.className = `alert alert-${type} alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3`;
