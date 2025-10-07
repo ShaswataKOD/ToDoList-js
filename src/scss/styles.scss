@@ -210,6 +210,8 @@ body {
             line-height: 1.25;
             display: inline-block;
             vertical-align: middle;
+            min-width: 60px;
+            text-align: center;
 
             &.bg-high {
               background-color: v.$priority-high;
