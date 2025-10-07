@@ -28,7 +28,6 @@ document.addEventListener("DOMContentLoaded", () => {
       if (e.key === "Enter") handleAddTask();
     });
 
-    
     searchPriority.addEventListener("change", handleSearch);
     searchTags.addEventListener("input", debounce(handleSearch, 300));
     if (searchTitle)
@@ -212,7 +211,7 @@ document.addEventListener("DOMContentLoaded", () => {
           </span>
         </div>
         <div class="task-tags mt-1">${tagsHtml}</div>
-        <small class="task-timestamp">${formatTimestamp(task.timestamp)}</small>
+        <small class="task-timestamp">${task.timestamp}</small>
       </div>
       <div class="task-actions">
         <button class="btn btn-sm btn-primary edit-task" title="Edit Task">
@@ -243,50 +242,20 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function displayAllTasks() {
-  workList.innerHTML = "";
+    workList.innerHTML = "";
 
-  if (tasks.length === 0) {
-    const empty = document.createElement("li");
-    empty.className = "list-group-item text-center text-muted";
-    empty.textContent = "No tasks found. Try adjusting your filters or add a new task.";
-    workList.appendChild(empty);
-    return;
-  }
-
-  tasks.forEach((task) => {
-    workList.appendChild(createTaskElement(task));
-  });
-}
-
-  // function displayAllTasks() {
-  //   workList.innerHTML = "";
-  //   const filter = searchPriority.value;
-
-  //   const filteredTasks = filter
-  //     ? tasks.filter((task) => task.priority === filter)
-  //     : tasks;
-
-  //   if (filteredTasks.length === 0) {
-  //     const empty = document.createElement("li");
-  //     empty.className = "list-group-item text-center text-muted";
-  //     empty.textContent = filter
-  //       ? `No tasks with ${filter} priority`
-  //       : "No tasks yet. Add one to get started!";
-  //     workList.appendChild(empty);
-  //     return;
-  //   }
-
-  //   filteredTasks.forEach((task) => {
-  //     workList.appendChild(createTaskElement(task));
-  //   });
-  // }
-
-  function formatTimestamp(timestamp) {
-    try {
-      return new Date(timestamp).toLocaleString();
-    } catch (error) {
-      return timestamp;
+    if (tasks.length === 0) {
+      const empty = document.createElement("li");
+      empty.className = "list-group-item text-center text-muted";
+      empty.textContent =
+        "No tasks found. Try adjusting your filters or add a new task.";
+      workList.appendChild(empty);
+      return;
     }
+
+    tasks.forEach((task) => {
+      workList.appendChild(createTaskElement(task));
+    });
   }
 
   function showMessage(msg, type = "info") {
