@@ -1,44 +1,5 @@
-const API_URL = "http://localhost:5000/api/tasks";
+const API_URL = "http://localhost:3000/api/tasks";
 
-// Get all tasks
-// export async function getTasks() {
-//   try {
-//     const res = await fetch(API_URL);
-//     if (!res.ok) {
-//       const error = await res.text();
-//       console.error("Failed to fetch tasks:", error);
-//       throw new Error("Failed to fetch tasks");
-//     }
-//     return res.json();
-//   } catch (error) {
-//     console.error("Error in getTasks:", error);
-//     throw error;
-//   }
-// }
-
-// export async function getTasks(tags = []) {
-//   try {
-//     let url = API_URL;
-
-//     if (tags.length > 0) {
-//       const tagParams = tags.map(tag => encodeURIComponent(tag)).join(",");
-//       url += `?tags=${tagParams}`;
-//     }
-
-//     const res = await fetch(url);
-
-//     if (!res.ok) {
-//       const error = await res.text();
-//       console.error("Failed to fetch tasks:", error);
-//       throw new Error("Failed to fetch tasks");
-//     }
-
-//     return res.json();
-//   } catch (error) {
-//     console.error("Error in getTasks:", error);
-//     throw error;
-//   }
-// }
 
 export async function getTasks({ tags = [], priority = '', title = '' } = {}) {
   try {
@@ -80,7 +41,9 @@ export async function addTask(title, priority, tags = []) {
         priority,
         tags, 
         completed: false,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toLocaleString('en-IN', {
+        timezone: 'Asia/Kolkata',
+      }),
       }),
     });
 

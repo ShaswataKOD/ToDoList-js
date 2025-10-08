@@ -3,7 +3,6 @@ import * as bootstrap from "bootstrap";
 import { getTasks, addTask, updateTask, deleteTask } from "./api.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-  // DOM Elements
   const taskInput = document.getElementById("task-input");
   const tagsInput = document.getElementById("tags-input");
   const addButton = document.getElementById("add-button");
@@ -11,9 +10,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const prioritySelect = document.getElementById("priority-select");
   const searchPriority = document.getElementById("search-priority");
   const searchTags = document.getElementById("search-tags");
-  const searchTitle = document.getElementById("search-title"); // add input for title search
+  const searchTitle = document.getElementById("search-title");
 
   let tasks = [];
+  let currentFilters = {}; // store current filters for reloading
 
   init();
 
@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
     displayAllTasks();
     attachEventListeners();
   }
+
   function attachEventListeners() {
     addButton.addEventListener("click", handleAddTask);
     taskInput.addEventListener("keypress", (e) => {
@@ -34,8 +35,9 @@ document.addEventListener("DOMContentLoaded", () => {
       searchTitle.addEventListener("input", debounce(handleSearch, 300));
   }
 
-  async function loadTasksFromServer(filters = {}) {
+  async function loadTasksFromServer(filters = currentFilters) {
     try {
+      currentFilters = filters; // filters are stored.
       tasks = await getTasks(filters);
       console.log("Tasks loaded:", tasks);
     } catch (error) {
@@ -46,7 +48,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   async function handleSearch() {
-    // parse inputs
     const priority = searchPriority.value;
     const tagsRaw = searchTags.value.trim();
     const title = searchTitle ? searchTitle.value.trim() : "";
@@ -58,7 +59,6 @@ document.addEventListener("DOMContentLoaded", () => {
           .filter(Boolean)
       : [];
 
-    // load tasks with filters from server
     await loadTasksFromServer({ tags, priority, title });
     displayAllTasks();
   }
@@ -82,20 +82,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     const tags = tagsRaw
-      ? tagsRaw
-          .split(",")
-          .map((tag) => tag.trim())
-          .filter(Boolean)
+      ? tagsRaw.split(",").map((tag) => tag.trim()).filter(Boolean)
       : [];
 
     try {
-      const newTask = await addTask(title, priority, tags);
-      tasks.push(newTask);
+      await addTask(title, priority, tags);
       taskInput.value = "";
       tagsInput.value = "";
       prioritySelect.value = "Low";
       taskInput.focus();
       showMessage("Task added successfully!", "success");
+
+      await loadTasksFromServer();
       displayAllTasks();
     } catch (error) {
       showMessage("Failed to add task.", "danger");
@@ -104,14 +102,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   async function handleDeleteTask(id) {
-    if (!confirm("Are you sure you want to delete this task?")) {
-      return;
-    }
+    if (!confirm("Are you sure you want to delete this task?")) return;
 
     try {
       await deleteTask(id);
-      tasks = tasks.filter((t) => t.id !== id);
       showMessage("Task deleted successfully!", "success");
+
+      await loadTasksFromServer();
       displayAllTasks();
     } catch (error) {
       showMessage("Failed to delete task.", "danger");
@@ -127,11 +124,9 @@ document.addEventListener("DOMContentLoaded", () => {
       "Edit tags (comma-separated):",
       task.tags ? task.tags.join(", ") : ""
     );
+
     const newTags = newTagsRaw
-      ? newTagsRaw
-          .split(",")
-          .map((tag) => tag.trim())
-          .filter(Boolean)
+      ? newTagsRaw.split(",").map((tag) => tag.trim()).filter(Boolean)
       : [];
 
     if (newTitle.trim() === "") {
@@ -140,19 +135,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
-      const updatedTask = await updateTask(task.id, {
+      await updateTask(task.id, {
         title: newTitle.trim(),
         priority: task.priority,
         completed: task.completed,
         tags: newTags,
       });
 
-      const index = tasks.findIndex((t) => t.id === task.id);
-      if (index !== -1) {
-        tasks[index] = updatedTask;
-      }
-
       showMessage("Task updated successfully!", "success");
+
+      await loadTasksFromServer();
       displayAllTasks();
     } catch (error) {
       showMessage("Failed to update task.", "danger");
@@ -162,18 +154,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function toggleCompletion(task) {
     try {
-      const updatedTask = await updateTask(task.id, {
+      await updateTask(task.id, {
         title: task.title,
         priority: task.priority,
         completed: !task.completed,
         tags: task.tags || [],
       });
 
-      const index = tasks.findIndex((t) => t.id === task.id);
-      if (index !== -1) {
-        tasks[index] = updatedTask;
-      }
-
+      await loadTasksFromServer();
       displayAllTasks();
     } catch (error) {
       showMessage("Failed to update task.", "danger");
@@ -183,9 +171,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function createTaskElement(task) {
     const li = document.createElement("li");
-    li.className = `list-group-item task-item ${
-      task.completed ? "completed" : ""
-    }`;
+    li.className = `list-group-item task-item ${task.completed ? "completed" : ""}`;
     li.dataset.priority = task.priority;
     li.dataset.id = task.id;
 
@@ -214,12 +200,8 @@ document.addEventListener("DOMContentLoaded", () => {
         <small class="task-timestamp">${task.timestamp}</small>
       </div>
       <div class="task-actions">
-        <button class="btn btn-sm btn-primary edit-task" title="Edit Task">
-          Edit
-        </button>
-        <button class="btn btn-sm btn-danger delete-task" title="Delete Task">
-          Delete
-        </button>
+        <button class="btn btn-sm btn-primary edit-task" title="Edit Task">Edit</button>
+        <button class="btn btn-sm btn-danger delete-task" title="Delete Task">Delete</button>
       </div>
     `;
 
@@ -280,3 +262,8 @@ document.addEventListener("DOMContentLoaded", () => {
     return div.innerHTML;
   }
 });
+
+
+
+
+
