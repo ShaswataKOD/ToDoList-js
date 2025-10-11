@@ -1,6 +1,13 @@
-const API_URL = "http://localhost:3000/api/tasks";
 
 
+// KILLLLLLL
+
+
+
+const API_URL = "http://localhost:5000/api/tasks";
+
+
+// get all tasks from the backend
 export async function getTasks({ tags = [], priority = '', title = '' } = {}) {
   try {
     const params = new URLSearchParams();
@@ -15,23 +22,28 @@ export async function getTasks({ tags = [], priority = '', title = '' } = {}) {
       params.append('title', title);
     }
 
-    const url = params.toString() ? `${API_URL}?${params.toString()}` : API_URL;
+    const url = params.toString()
+      ? `${API_URL}/search?${params.toString()}`
+      : API_URL;
 
     const res = await fetch(url);
     if (!res.ok) {
       const error = await res.text();
-      console.error('Failed to fetch tasks:', error);
-      throw new Error('Failed to fetch tasks');
+      console.error("Failed to fetch tasks:", error);
+      throw new Error("Failed to fetch tasks");
     }
+
     return res.json();
   } catch (error) {
-    console.error('Error in getTasks:', error);
-    throw error;
+    console.error("Error in getTasks:", error);
+    return [];
   }
 }
 
-//adding new task (including tags)
-export async function addTask(title, priority, tags = []) {
+
+// need to make post request
+
+export async function addTask(title, priority, isCompleted, tags = []) {
   try {
     const res = await fetch(API_URL, {
       method: "POST",
@@ -39,28 +51,24 @@ export async function addTask(title, priority, tags = []) {
       body: JSON.stringify({
         title,
         priority,
-        tags, 
-        completed: false,
-        timestamp: new Date().toLocaleString('en-IN', {
-        timezone: 'Asia/Kolkata',
-      }),
+        isCompleted,
+        tags,
       }),
     });
 
     if (!res.ok) {
-      const error = await res.text();
-      console.error("Failed to add task:", error);
-      throw new Error("Failed to add task");
+      throw new Error("Failed to add Tasks");
     }
 
-    return res.json();
+    const data = await res.json();
+    return data;
   } catch (error) {
-    console.error("Error in addTask:", error);
-    throw error;
+    console.error("Error in Add task", error);
   }
 }
 
-// Update task 
+// Update task API 
+
 export async function updateTask(id, data) {
   try {
     console.log("Updating task with ID:", id, "Data:", data);
@@ -81,12 +89,14 @@ export async function updateTask(id, data) {
   }
 }
 
-// Delete task
+// Delete task using id of the tasks
+
+
 export async function deleteTask(id) {
   try {
     console.log("Deleting task with ID:", id);
-    const res = await fetch(`${API_URL}/${id}`, { 
-      method: "DELETE" 
+    const res = await fetch(`${API_URL}/${id}`, {
+      method: "DELETE",
     });
 
     if (!res.ok) {
@@ -94,12 +104,12 @@ export async function deleteTask(id) {
       console.error("Failed to delete task:", error);
       throw new Error("Failed to delete task");
     }
-
     return res.json();
   } catch (error) {
     console.error("Error in deleteTask:", error);
-    throw error;
   }
 }
+
+
 
 
