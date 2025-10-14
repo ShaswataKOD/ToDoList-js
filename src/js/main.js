@@ -1,4 +1,4 @@
-//version 2
+
 
 import "../scss/styles.scss";
 import * as bootstrap from "bootstrap";
@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let tasks = [];
 
   init();
-
+        
   async function init() {
     await loadTasksFromServer();
     displayAllTasks();
