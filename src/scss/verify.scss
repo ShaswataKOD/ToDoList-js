@@ -10,7 +10,7 @@ body {
   padding: 20px;
 }
 
-.signup-container {
+.verify-container {
   width: 100%;
   max-width: 420px;
 }
@@ -18,7 +18,7 @@ body {
 .card {
   border-radius: 12px;
   background: #ffffff;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
 }
 
 .logo {
@@ -51,30 +51,12 @@ p.text-secondary {
   padding: 0.625rem;
   background: #1a73e8;
   border: none;
+  transition: all 0.3s ease;
 
   &:hover {
     background: #1558b0;
+    transform: translateY(-1px);
   }
-}
-
-.btn-outline-primary {
-  font-size: 0.875rem;
-  border-radius: 6px;
-  border-color: #1a73e8;
-  color: #1a73e8;
-
-  &:hover {
-    background-color: #e8f0fe;
-    color: #1a73e8;
-  }
-}
-
-.input-group .form-control {
-  border-radius: 6px 0 0 6px;
-}
-
-.input-group .btn {
-  border-radius: 0 6px 6px 0;
 }
 
 .text-muted small {
