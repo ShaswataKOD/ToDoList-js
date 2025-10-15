@@ -35,6 +35,5 @@ export function showToast(message, type = "info", delay = 3000) {
   const toast = new bootstrap.Toast(toastEl, { delay });
   toast.show();
 
-  // Remove toast from DOM after it hides
   toastEl.addEventListener("hidden.bs.toast", () => toastEl.remove());
 }

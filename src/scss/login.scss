@@ -1,0 +1,138 @@
+$primary-color: #1a73e8;
+$secondary-color: #f1f3f4;
+$background-color: #fafafa;
+$border-radius: 8px;
+$box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: $background-color;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.signup-container {
+    width: 100%;
+    max-width: 400px;
+    background-color: #ffffff;
+    box-shadow: $box-shadow;
+    border-radius: $border-radius;
+    padding: 20px;
+    padding-top: 40px;
+}
+
+.card {
+    border: none;
+}
+
+.logo {
+    font-size: 36px;
+    font-weight: 500;
+    color: $primary-color;
+    letter-spacing: -1px;
+}
+
+p.text-secondary {
+    color: #5f6368;
+    font-size: 16px;
+    margin-top: 8px;
+}
+
+.form-floating {
+    position: relative;
+    margin-bottom: 20px;
+
+    input {
+        border-radius: $border-radius;
+        padding: 16px 12px;
+        background-color: $secondary-color;
+        border: 1px solid #dadce0;
+        font-size: 16px;
+        transition: all 0.3s ease;
+
+        &:focus {
+            border-color: $primary-color;
+            background-color: white;
+        }
+
+        &:focus+label {
+            color: $primary-color;
+        }
+    }
+
+    label {
+        position: absolute;
+        top: 50%;
+        left: 12px;
+        transform: translateY(-50%);
+        color: #5f6368;
+        font-size: 16px;
+        transition: all 0.3s ease;
+    }
+
+    input:focus+label,
+    input:not(:placeholder-shown)+label {
+        top: 8px;
+        font-size: 12px;
+        color: $primary-color;
+    }
+}
+
+.btn {
+    background-color: $primary-color;
+    color: white;
+    border: none;
+    border-radius: $border-radius;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+
+    &:hover {
+        background-color: darken($primary-color, 10%);
+    }
+
+    &:focus {
+        box-shadow: 0 0 0 2px rgba($primary-color, 0.3);
+        outline: none;
+    }
+}
+
+.text-center p {
+    color: #5f6368;
+    font-size: 14px;
+}
+
+.text-center a {
+    color: $primary-color;
+    text-decoration: none;
+    font-weight: 500;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.toast {
+    background-color: #323232;
+    color: white;
+    font-size: 14px;
+    padding: 12px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.modal-content {
+    border-radius: $border-radius;
+}
+
+.modal-header {
+    border-bottom: none;
+}
+
+.modal-footer {
+    border-top: none;
+}
