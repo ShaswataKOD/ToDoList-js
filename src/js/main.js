@@ -1,5 +1,3 @@
-
-
 import "../scss/styles.scss";
 import * as bootstrap from "bootstrap";
 import { getTasks, addTask, updateTask, deleteTask } from "./api.js";
@@ -13,27 +11,32 @@ document.addEventListener("DOMContentLoaded", () => {
   const prioritySelect = document.getElementById("priority-select");
   const searchPriority = document.getElementById("search-priority");
   const searchTags = document.getElementById("search-tags");
-  const searchTitle = document.getElementById("search-title"); 
+  const searchTitle = document.getElementById("search-title");
 
   let tasks = [];
 
   init();
-        
+
   async function init() {
     await loadTasksFromServer();
     displayAllTasks();
     attachEventListeners();
   }
+
   function attachEventListeners() {
     addButton.addEventListener("click", handleAddTask);
+
     taskInput.addEventListener("keypress", (e) => {
       if (e.key === "Enter") handleAddTask();
     });
 
     searchPriority.addEventListener("change", handleSearch);
+
     searchTags.addEventListener("input", debounce(handleSearch, 300));
-    if (searchTitle)
+
+    if (searchTitle) {
       searchTitle.addEventListener("input", debounce(handleSearch, 300));
+    }
   }
 
   async function loadTasksFromServer(filters = {}) {
@@ -48,7 +51,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   async function handleSearch() {
-    // parse inputs
     const priority = searchPriority.value;
     const tagsRaw = searchTags.value.trim();
     const title = searchTitle ? searchTitle.value.trim() : "";
@@ -60,8 +62,8 @@ document.addEventListener("DOMContentLoaded", () => {
           .filter(Boolean)
       : [];
 
-    // load tasks with filters from server
     await loadTasksFromServer({ tags, priority, title });
+
     displayAllTasks();
   }
 
@@ -92,12 +94,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       const newTask = await addTask(title, priority, false, tags);
+
       tasks.push(newTask);
+
       taskInput.value = "";
       tagsInput.value = "";
       prioritySelect.value = "Low";
+
       taskInput.focus();
+
       showMessage("Task added successfully!", "success");
+
       displayAllTasks();
     } catch (error) {
       showMessage("Failed to add task.", "danger");
@@ -105,9 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-
-
-// delete the taasks 
+  // delete the taasks
   async function handleDeleteTask(id) {
     if (!confirm("Are you sure you want to delete this task?")) {
       return;
@@ -115,8 +120,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       await deleteTask(id);
+
       tasks = tasks.filter((t) => t._id !== id);
+
       showMessage("Task deleted successfully!", "success");
+
       displayAllTasks();
     } catch (error) {
       showMessage("Failed to delete task.", "danger");
@@ -124,8 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-
-// edit alll the tasks
+  // edit alll the tasks
 
   async function handleEditTask(task) {
     const newTitle = prompt("Edit your task:", task.title);
@@ -168,9 +175,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-
-
-// currently storing in isCompleted field 
+  // currently storing in isCompleted field
   async function toggleCompletion(task) {
     try {
       const updatedTask = await updateTask(task._id, {
@@ -254,8 +259,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return li;
   }
 
-
-// show all the tasks to the users
+  // show all the tasks to the users
 
   function displayAllTasks() {
     workList.innerHTML = "";
@@ -273,10 +277,6 @@ document.addEventListener("DOMContentLoaded", () => {
       workList.appendChild(createTaskElement(task));
     });
   }
-
-
-
-
 
   function showMessage(msg, type = "info") {
     const alert = document.createElement("div");

@@ -1,10 +1,9 @@
 import * as bootstrap from "bootstrap";
 
 /**
- * Show a reusable Bootstrap toast
- * @param {string} message - Message text (can use HTML)
- * @param {string} type - "success", "error", "info" (Bootstrap color)
- * @param {number} delay - How long toast is visible in ms (default 3000)
+ * @param {string} message 
+ * @param {string} type
+ * @param {number} delay 
  */
 export function showToast(message, type = "info", delay = 3000) {
   const container = document.getElementById("toastContainer");

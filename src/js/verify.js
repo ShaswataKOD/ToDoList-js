@@ -45,19 +45,24 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/auth/verify-otp", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, otp }),
-      });
+      const response = await fetch(
+        "http://localhost:5000/api/auth/verify-otp",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, otp }),
+        }
+      );
+
       const data = await response.json();
 
       if (data.success) {
         showToast("User verified successfully!", "success", 2000);
         setTimeout(() => {
-          window.location.href = "./login.html"; // redirect to signin page
+          window.location.href = "./login.html";
         }, 2000);
-      } else {
+      } 
+      else {
         showToast(data.message || "Verification failed", "error");
       }
     } catch (err) {
@@ -66,11 +71,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // Skip button click
+
   skipBtn.addEventListener("click", () => {
+    
     showToast("Verification skipped", "info", 1500);
+
     setTimeout(() => {
-      window.location.href = "./login.html"; // redirect to signin page
+      window.location.href = "./login.html"; 
     }, 1500);
   });
 });
