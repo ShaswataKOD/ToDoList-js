@@ -1,5 +1,5 @@
-import "../scss/resetPassword.scss";
-import { showToast } from "./modal.js";
+import "../../scss/resetpassword/resetpassword.scss";
+import { showToast } from "../modal";
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("resetPasswordForm");

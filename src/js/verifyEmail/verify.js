@@ -1,5 +1,5 @@
-import "../scss/verify.scss";
-import { showToast } from "./modal.js";
+import "../../scss/verifyotp/verify.scss";
+import { showToast } from "../modal.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("verifyForm");
