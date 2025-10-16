@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const sendOtpBtn = document.getElementById("sendOtpBtn");
   const skipBtn = document.getElementById("skipBtn");
 
-  // Send OTP when button clicked
+  
   sendOtpBtn.addEventListener("click", async () => {
     const email = document.getElementById("email").value.trim();
     if (!email) {

@@ -48,6 +48,8 @@ export async function getTasks({ tags = [], priority = "", title = "" } = {}) {
 
 export async function addTask(title, priority, isCompleted, tags = []) {
   try {
+    const token = localStorage.getItem("accessToken");
+
     const res = await fetch(API_URL, {
       method: "POST",
       headers: {
