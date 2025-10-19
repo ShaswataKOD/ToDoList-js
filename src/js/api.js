@@ -1,4 +1,4 @@
-// KILLLLLLL
+import axios from "axios";
 
 const API_URL = "http://localhost:5000/api/tasks";
 
@@ -6,18 +6,9 @@ export async function getTasks({ tags = [], priority = "", title = "" } = {}) {
   try {
     const token = localStorage.getItem("accessToken");
     const params = new URLSearchParams();
-
-    if (tags.length > 0) {
-      params.append("tags", tags.join(","));
-    }
-
-    if (priority) {
-      params.append("priority", priority);
-    }
-
-    if (title) {
-      params.append("title", title);
-    }
+    if (tags.length > 0) params.append("tags", tags.join(","));
+    if (priority) params.append("priority", priority);
+    if (title) params.append("title", title);
 
     const url = params.toString()
       ? `${API_URL}/search?${params.toString()}`
@@ -33,9 +24,7 @@ export async function getTasks({ tags = [], priority = "", title = "" } = {}) {
 
     if (!res.ok) {
       const error = await res.text();
-
       console.error("Failed to fetch tasks:", error);
-
       throw new Error("Failed to fetch tasks");
     }
 
@@ -56,31 +45,20 @@ export async function addTask(title, priority, isCompleted, tags = []) {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({
-        title,
-        priority,
-        isCompleted,
-        tags,
-      }),
+      body: JSON.stringify({ title, priority, isCompleted, tags }),
     });
 
-    if (!res.ok) {
-      throw new Error("Failed to add Tasks");
-    }
+    if (!res.ok) throw new Error("Failed to add task");
 
-    const data = await res.json();
-
-    return data;
+    return res.json();
   } catch (error) {
-    console.error("Error in Add task", error);
+    console.error("Error in addTask:", error);
   }
 }
 
 export async function updateTask(id, data) {
   try {
     const token = localStorage.getItem("accessToken");
-
-    console.log("Updating task with ID:", id, "Data:", data);
 
     const res = await fetch(`${API_URL}/${id}`, {
       method: "PUT",
@@ -108,8 +86,6 @@ export async function deleteTask(id) {
   try {
     const token = localStorage.getItem("accessToken");
 
-    console.log("Deleting task with ID:", id);
-
     const res = await fetch(`${API_URL}/${id}`, {
       method: "DELETE",
       headers: {
@@ -119,13 +95,59 @@ export async function deleteTask(id) {
 
     if (!res.ok) {
       const error = await res.text();
-
       console.error("Failed to delete task:", error);
-      
       throw new Error("Failed to delete task");
     }
+
     return res.json();
   } catch (error) {
     console.error("Error in deleteTask:", error);
   }
 }
+
+export const api = axios.create({ baseURL: "http://localhost:5000" });
+
+api.interceptors.request.use((config) => {
+  const accessToken = localStorage.getItem("accessToken");
+  if (accessToken) config.headers.Authorization = `Bearer ${accessToken}`;
+  return config;
+});
+
+api.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config;
+
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
+      const refreshToken = localStorage.getItem("refreshToken");
+      if (!refreshToken) return Promise.reject(error);
+
+      try {
+        const res = await axios.post(
+          "http://localhost:5000/api/auth/refresh",
+          {},
+          { headers: { "refresh-token": refreshToken } }
+        );
+
+        const newAccessToken = res.headers["access-token"];
+        const newRefreshToken = res.headers["refresh-token"];
+
+        localStorage.setItem("accessToken", newAccessToken);
+        localStorage.setItem("refreshToken", newRefreshToken);
+
+        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+        return api(originalRequest);
+      } catch (err) {
+        console.log("Refresh failed", err);
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        window.location.href = "/pages/login.html";
+        return Promise.reject(err);
+      }
+    }
+
+    return Promise.reject(error);
+  }
+);

@@ -27,6 +27,8 @@ document.addEventListener("DOMContentLoaded", () => {
       if (data.accessToken && data.refreshToken) {
         localStorage.setItem("accessToken", data.accessToken);
         localStorage.setItem("refreshToken", data.refreshToken);
+        console.log(data.accessToken);
+        console.log(data.refreshToken);
 
         showToast("Login successful!", "success");
 

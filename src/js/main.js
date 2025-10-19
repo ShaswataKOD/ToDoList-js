@@ -13,6 +13,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const searchTags = document.getElementById("search-tags");
   const searchTitle = document.getElementById("search-title");
 
+  const token = localStorage.getItem("accessToken");
+  if (!token) {
+    alert("Please login first");
+    window.location.href = "./pages/login.html"; //  fix this
+    return;
+  }
   let tasks = [];
 
   init();
