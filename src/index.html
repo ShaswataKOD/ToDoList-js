@@ -14,14 +14,29 @@
     <script type="module" src="./js/main.js"></script>
   </head>
   <body>
-   
+    <div class="profile-wrapper dropdown">
+      <div
+        class="profile-circle dropdown-toggle"
+        id="profileDropdown"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        <!-- You can put initials or image here -->
+        <span>SB</span>
+      </div>
+      <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+        <li>
+          <a class="dropdown-item" href="#" id="resetPassword"
+            >Reset Password</a
+          >
+        </li>
+      </ul>
+    </div>
+
     <div class="Todo-container">
-   
       <header>
         <h1 class="header">Todo List</h1>
       </header>
-
-     
       <section class="input-section" aria-label="Add new task">
         <div class="input-group">
           <input
@@ -62,7 +77,6 @@
       </section>
 
       <section class="filter-section" aria-label="Filter tasks">
-    
         <div class="mb-3">
           <label for="search-priority" class="form-label"
             >Filter by Priority:</label
@@ -79,7 +93,6 @@
           </select>
         </div>
 
-
         <div class="mb-3">
           <label for="search-title" class="form-label">Search by Title:</label>
           <input
@@ -91,7 +104,6 @@
           />
         </div>
 
-    
         <div class="mb-3">
           <label for="search-tags" class="form-label">Search by Tags:</label>
           <input
@@ -104,7 +116,6 @@
         </div>
       </section>
 
-     
       <section aria-label="Task list">
         <ul id="work-list" class="work-list list-group" role="list"></ul>
       </section>
