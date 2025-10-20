@@ -102,8 +102,12 @@ export async function deleteTask(id) {
     return res.json();
   } catch (error) {
     console.error("Error in deleteTask:", error);
+    throw error
   }
 }
+
+
+// not sending the refresh token not handling the 401 error 
 
 export const api = axios.create({ baseURL: "http://localhost:5000" });
 
