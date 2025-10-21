@@ -1,12 +1,7 @@
-// import { axios } from "axios";
-
 const API_URL = "http://localhost:5000/api/tasks";
-
-// export const api = axios.create({ baseURL: "http://localhost:5000" });
 
 export async function getTasks({ tags = [], priority = "", title = "" } = {}) {
   try {
-    // const token = localStorage.getItem("accessToken");
 
     const params = new URLSearchParams();
 
@@ -29,8 +24,7 @@ export async function getTasks({ tags = [], priority = "", title = "" } = {}) {
     const res = await fetch(url, {
       method: "GET",
       headers: {
-        "Content-Type": "application/json",
-        // Authorization: `Bearer ${token}`, // can be removed
+        "Content-Type": "application/json", 
       },
     });
 
@@ -49,13 +43,12 @@ export async function getTasks({ tags = [], priority = "", title = "" } = {}) {
 
 export async function addTask(title, priority, isCompleted, tags = []) {
   try {
-    // const token = localStorage.getItem("accessToken");
 
     const res = await fetch(API_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${token}`,
+        
       },
       body: JSON.stringify({ title, priority, isCompleted, tags }),
     });
@@ -72,13 +65,11 @@ export async function addTask(title, priority, isCompleted, tags = []) {
 
 export async function updateTask(id, data) {
   try {
-    //const token = localStorage.getItem("accessToken");
 
     const res = await fetch(`${API_URL}/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        // Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(data),
     });
@@ -98,13 +89,8 @@ export async function updateTask(id, data) {
 
 export async function deleteTask(id) {
   try {
-    //const token = localStorage.getItem("accessToken");
-
     const res = await fetch(`${API_URL}/${id}`, {
       method: "DELETE",
-      // headers: {
-      //   Authorization: `Bearer ${token}`,
-      // },
     });
 
     if (!res.ok) {
@@ -119,58 +105,6 @@ export async function deleteTask(id) {
     throw error;
   }
 }
-
-// not sending the refresh token not handling the 401 error
-// api.interceptors.request.use((config) => {
-//   const accessToken = localStorage.getItem("accessToken");
-
-//   if (accessToken) {
-//     config.headers.Authorization = `Bearer ${accessToken}`;
-//   }
-
-//   return config;
-// });
-
-// api.interceptors.response.use(
-//   (response) => response,
-//   async (error) => {
-//     const originalRequest = error.config;
-
-//     if (error.response?.status === 401 && !originalRequest._retry) {
-//       originalRequest._retry = true;
-
-//       const refreshToken = localStorage.getItem("refreshToken");
-//       if (!refreshToken) {
-//         return Promise.reject(error);
-//       }
-
-//       try {
-//         const res = await axios.post(
-//           "http://localhost:5000/api/auth/refresh",
-//           {},
-//           { headers: { "refresh-token": refreshToken } }
-//         );
-
-//         const newAccessToken = res.headers["access-token"];
-//         const newRefreshToken = res.headers["refresh-token"];
-
-//         localStorage.setItem("accessToken", newAccessToken);
-//         localStorage.setItem("refreshToken", newRefreshToken);
-
-//         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-//         return api(originalRequest);
-//       } catch (err) {
-//         console.log("Refresh failed", err);
-//         localStorage.removeItem("accessToken");
-//         localStorage.removeItem("refreshToken");
-//         window.location.href = "/pages/login.html";
-//         return Promise.reject(err);
-//       }
-//     }
-
-//     return Promise.reject(error);
-//   }
-// );
 
 const { fetch: originalFetch } = window;
 
@@ -207,7 +141,6 @@ window.fetch = async (...args) => {
         throw new Error("Token refresh failed");
       }
 
-      // Read tokens from response body, not headers
       const data = await refreshResponse.json();
       const newAccessToken = data.accessToken;
       const newRefreshToken = data.refreshToken;

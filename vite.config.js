@@ -7,14 +7,14 @@ export default {
     rollupOptions: {
       input: {
         main: resolve(__dirname, "src/index.html"),
-        signup: resolve(__dirname, "src/pages/signup.html"), // 👈 include this page in build
-        login: resolve(__dirname, "src/pages/login.html"), // (optional) include others too
+        signup: resolve(__dirname, "src/pages/signup.html"),
+        login: resolve(__dirname, "src/pages/login.html"), 
       },
     },
   },
   server: {
     port: 8080,
-    open: "/pages/signup.html", // 👈 this opens signup.html on dev start
+    open: "/pages/signup.html", 
   },
   css: {
     preprocessorOptions: {

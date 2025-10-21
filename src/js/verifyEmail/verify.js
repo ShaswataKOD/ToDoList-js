@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const sendOtpBtn = document.getElementById("sendOtpBtn");
   const skipBtn = document.getElementById("skipBtn");
 
-  
   sendOtpBtn.addEventListener("click", async () => {
     const email = document.getElementById("email").value.trim();
     if (!email) {
@@ -58,11 +57,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (data.success) {
         showToast("User verified successfully!", "success", 2000);
-        setTimeout(() => {
-          window.location.href = "./login.html";
-        }, 2000);
-      } 
-      else {
+
+        window.location.href = "./login.html";
+      } else {
         showToast(data.message || "Verification failed", "error");
       }
     } catch (err) {
@@ -71,13 +68,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-
   skipBtn.addEventListener("click", () => {
-    
     showToast("Verification skipped", "info", 1500);
 
     setTimeout(() => {
-      window.location.href = "./login.html"; 
+      window.location.href = "./login.html";
     }, 1500);
   });
 });

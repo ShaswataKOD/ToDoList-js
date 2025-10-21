@@ -1,9 +1,9 @@
 import * as bootstrap from "bootstrap";
 
 /**
- * @param {string} message 
+ * @param {string} message
  * @param {string} type
- * @param {number} delay 
+ * @param {number} delay
  */
 export function showToast(message, type = "info", delay = 3000) {
   const container = document.getElementById("toastContainer");

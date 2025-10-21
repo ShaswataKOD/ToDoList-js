@@ -32,9 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         showToast("Login successful!", "success");
 
-        setTimeout(() => {
-          window.location.href = "index.html";
-        }, 3000);
+        window.location.href = "index.html";
       } else {
         showToast(data.message || "Login failed", "error");
       }
