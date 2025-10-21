@@ -1,5 +1,5 @@
 import "../../scss/signup/signup.scss";
-import { showToast } from "../modal.js";
+import { showToast } from "../toast.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("signupForm");
@@ -26,12 +26,12 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await response.json();
 
       if (!response.ok) {
-        const message = data.message || data.error || "Registration failed";
+        const message = data.message || data.error;
         showToast(message, "error");
         return;
       }
 
-      showToast(data.message || "Account created successfully!", "success");
+      showToast("Account created successfully!", "success");
       window.location.href = "../pages/verifyUser.html";
     } catch (err) {
       console.error("Signup error:", err);

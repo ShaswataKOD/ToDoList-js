@@ -1,5 +1,5 @@
 import "../../scss/login/login.scss";
-import { showToast } from "../modal.js";
+import { showToast } from "../toast.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("loginForm");
