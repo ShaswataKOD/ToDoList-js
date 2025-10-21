@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const emailStep = document.getElementById("step1");
   const otpStep = document.getElementById("step2");
   const passwordStep = document.getElementById("step3");
-
   const emailInput = document.getElementById("email");
   const otpInput = document.getElementById("otp");
   const currentPasswordInput = document.getElementById("currentPassword");
@@ -24,7 +23,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
       const res = await fetch("http://localhost:5000/api/auth/forgotpassword", {
-        // fix the route
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
@@ -59,7 +57,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const res = await fetch(
           "http://localhost:5000/api/auth/forgotpassword",
           {
-            // fx this to
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email: emailGlobal, otp }),
