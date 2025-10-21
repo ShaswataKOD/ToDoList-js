@@ -25,14 +25,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const data = await response.json();
 
-      if (data.success) {
-        showToast("Account created successfully!", "success");
-        setTimeout(() => {
-          window.location.href = "../pages/verifyUser.html";
-        }, 3000);
-      } else {
-        showToast(data.message, "error");
+      if (!response.ok) {
+        const message = data.message || data.error || "Registration failed";
+        showToast(message, "error");
+        return;
       }
+
+      showToast(data.message || "Account created successfully!", "success");
+      setTimeout(() => {
+        window.location.href = "../pages/verifyUser.html";
+      }, 3000);
     } catch (err) {
       console.error("Signup error:", err);
       showToast(
