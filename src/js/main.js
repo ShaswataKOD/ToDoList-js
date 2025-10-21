@@ -368,13 +368,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  const token = localStorage.getItem("accessToken");
-  if (!token) {
-    alert("Please login first");
-    window.location.href = "./pages/login.html"; // fix this
-    return;
-  }
-
   let tasks = [];
 
   init();
@@ -551,13 +544,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const priorityClass = task.priority.toLowerCase();
     const tagsHtml = (task.tags || [])
-      .map((tag) => `<span class="badge bg-secondary me-1">${escapeHtml(tag)}</span>`)
+      .map(
+        (tag) =>
+          `<span class="badge bg-secondary me-1">${escapeHtml(tag)}</span>`
+      )
       .join("");
 
     li.innerHTML = `
       <div class="task-content">
         <div class="task-main">
-          <span class="task-text ${task.isCompleted ? "text-decoration-line-through" : ""}">
+          <span class="task-text ${
+            task.isCompleted ? "text-decoration-line-through" : ""
+          }">
             ${escapeHtml(task.title)}
           </span>
           <span class="badge priority-badge bg-${priorityClass}">
@@ -565,7 +563,9 @@ document.addEventListener("DOMContentLoaded", () => {
           </span>
         </div>
         <div class="task-tags mt-1">${tagsHtml}</div>
-        <small class="task-timestamp">${new Date(task.updatedAt).toLocaleString()}</small>
+        <small class="task-timestamp">${new Date(
+          task.updatedAt
+        ).toLocaleString()}</small>
       </div>
       <div class="task-actions">
         <button class="btn btn-sm btn-primary edit-task" title="Edit Task">Edit</button>
