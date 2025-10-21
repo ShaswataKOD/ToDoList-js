@@ -158,7 +158,6 @@ window.fetch = async (...args) => {
             ...modifiedConfig.headers,
             Authorization: `Bearer ${newAccessToken}`,
           },
-          // _retry: true,
         };
 
         return await originalFetch(resource, retryConfig);
