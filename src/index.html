@@ -14,22 +14,26 @@
     <script type="module" src="./js/main.js"></script>
   </head>
   <body>
-    <div class="profile-wrapper dropdown">
+    <div class="profile-wrapper" tabindex="0">
       <div
-        class="profile-circle dropdown-toggle"
-        id="profileDropdown"
-        data-bs-toggle="dropdown"
+        class="profile-circle"
+        id="profileBtn"
+        aria-haspopup="true"
         aria-expanded="false"
+        role="button"
+        tabindex="0"
       >
-        <span>SB</span>
+        AB
       </div>
-      <ul class="dropdown-menu" aria-labelledby="profileDropdown">
-        <li>
-          <a class="dropdown-item" href="#" id="resetPassword"
-            >Reset Password</a
-          >
-        </li>
-      </ul>
+      <div
+        class="dropdown-menu"
+        id="profileDropdown"
+        role="menu"
+        aria-label="Profile options"
+      >
+        <div class="dropdown-item" id="resetPassword">Reset Password</div>
+        <div class="dropdown-item" id="logoutBtn">Logout</div>
+      </div>
     </div>
 
     <div class="Todo-container">

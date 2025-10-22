@@ -11,19 +11,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const searchPriority = document.getElementById("search-priority");
   const searchTags = document.getElementById("search-tags");
   const searchTitle = document.getElementById("search-title");
-  const profileAvatar = document.getElementById("profileAvatar");
+  const profileBtn = document.getElementById("profileBtn");
   const profileDropdown = document.getElementById("profileDropdown");
   const resetPasswordBtn = document.getElementById("resetPasswordBtn");
 
-  if (profileAvatar && profileDropdown) {
-    profileAvatar.addEventListener("click", (e) => {
+  if (profileBtn && profileDropdown) {
+    profileBtn.addEventListener("click", (e) => {
       e.stopPropagation();
-      profileDropdown.style.display =
-        profileDropdown.style.display === "block" ? "none" : "block";
+      profileDropdown.classList.toggle("show");
     });
 
     document.addEventListener("click", () => {
-      profileDropdown.style.display = "none";
+      profileDropdown.classList.remove("show");
     });
   }
 
@@ -33,7 +32,6 @@ document.addEventListener("DOMContentLoaded", () => {
       window.location.href = "./reset-password.html";
     });
   }
-
   let tasks = [];
 
   init();

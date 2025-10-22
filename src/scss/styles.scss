@@ -27,24 +27,67 @@ body {
   top: 10px;
   left: 10px;
   z-index: 1050;
+  font-family: "Roboto", Arial, sans-serif;
 
   .profile-circle {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-color: #0d6efd;
-    color: #fff;
+    background-color: #4285f4;
+    color: white;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    font-weight: bold;
+    font-weight: 600;
+    font-size: 1rem;
+    user-select: none;
+    box-shadow: 0 1px 3px rgb(60 64 67 / 0.3);
+    transition: box-shadow 0.2s ease;
+
+    &:hover,
+    &:focus {
+      box-shadow: 0 4px 8px rgb(60 64 67 / 0.3);
+      outline: none;
+    }
   }
 
   .dropdown-menu {
-    left: 0 !important;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    width: 180px;
+    background: white;
+    border-radius: 8px;
+    box-shadow:
+      0 1px 3px rgb(60 64 67 / 0.1),
+      0 4px 8px rgb(60 64 67 / 0.15);
+    padding: 8px 0;
+    font-size: 0.9rem;
+    color: #202124;
+    user-select: none;
+    display: none;
+    z-index: 1100;
+
+    &.show {
+      display: block;
+    }
+
+    .dropdown-item {
+      padding: 10px 16px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+      white-space: nowrap;
+
+      &:hover,
+      &:focus {
+        background-color: #f1f3f4;
+        outline: none;
+      }
+    }
   }
 }
+
 
 .Todo-container {
   max-width: 700px;

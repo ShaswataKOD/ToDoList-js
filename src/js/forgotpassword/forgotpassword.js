@@ -119,7 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
           passwordStep.style.display = "none";
 
-          window.location.href = "/login.html";
+          window.location.href = "/pages/login.html";
         } else {
           showToast(data.message || "Failed to reset password", "error");
         }
