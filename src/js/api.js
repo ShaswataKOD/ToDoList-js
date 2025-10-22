@@ -2,7 +2,6 @@ const API_URL = "http://localhost:5000/api/tasks";
 
 export async function getTasks({ tags = [], priority = "", title = "" } = {}) {
   try {
-
     const params = new URLSearchParams();
 
     if (tags.length > 0) {
@@ -24,7 +23,7 @@ export async function getTasks({ tags = [], priority = "", title = "" } = {}) {
     const res = await fetch(url, {
       method: "GET",
       headers: {
-        "Content-Type": "application/json", 
+        "Content-Type": "application/json",
       },
     });
 
@@ -43,12 +42,10 @@ export async function getTasks({ tags = [], priority = "", title = "" } = {}) {
 
 export async function addTask(title, priority, isCompleted, tags = []) {
   try {
-
     const res = await fetch(API_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        
       },
       body: JSON.stringify({ title, priority, isCompleted, tags }),
     });
@@ -65,7 +62,6 @@ export async function addTask(title, priority, isCompleted, tags = []) {
 
 export async function updateTask(id, data) {
   try {
-
     const res = await fetch(`${API_URL}/${id}`, {
       method: "PUT",
       headers: {
@@ -132,7 +128,7 @@ window.fetch = async (...args) => {
         {
           method: "POST",
           headers: {
-            "refresh-token": refreshToken,
+            refresh_token: refreshToken,
           },
         }
       );

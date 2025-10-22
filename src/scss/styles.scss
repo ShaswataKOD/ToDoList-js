@@ -1,7 +1,7 @@
 @use "var" as v;
 @import "bootstrap/scss/bootstrap";
 
-// Global
+
 * {
   margin: 0;
   padding: 0;
@@ -11,11 +11,9 @@
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     "Helvetica Neue", Arial, sans-serif;
-  background: linear-gradient(
-    135deg,
-    v.$primary-color 0%,
-    darken(v.$primary-color, 15%) 100%
-  );
+  background: linear-gradient(135deg,
+      v.$primary-color 0%,
+      darken(v.$primary-color, 15%) 100%);
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -24,18 +22,17 @@ body {
   overflow: auto;
 }
 
-// Profile Section
 .profile-wrapper {
-  position: fixed; // make it fixed so it stays in the viewport
+  position: fixed;
   top: 10px;
-  left: 10px; // ensures it's on the left
-  z-index: 1050; // above other elements
+  left: 10px;
+  z-index: 1050;
 
   .profile-circle {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-color: #0d6efd; // blue color for demo
+    background-color: #0d6efd;
     color: #fff;
     display: flex;
     align-items: center;
@@ -45,11 +42,10 @@ body {
   }
 
   .dropdown-menu {
-    left: 0 !important; // ensures dropdown aligns to left of the circle
+    left: 0 !important;
   }
 }
 
-// Main Container
 .Todo-container {
   max-width: 700px;
   width: 100%;
@@ -59,25 +55,21 @@ body {
   border-radius: 1.25rem;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
 
-  // Header
   h1.header {
     font-size: 2.5rem;
     font-weight: 700;
     color: v.$text-primary;
     text-align: center;
     margin-bottom: 2rem;
-    background: linear-gradient(
-      135deg,
-      v.$primary-color 0%,
-      darken(v.$primary-color, 15%) 100%
-    );
+    background: linear-gradient(135deg,
+        v.$primary-color 0%,
+        darken(v.$primary-color, 15%) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     letter-spacing: -0.5px;
   }
 
-  // Input Section
   .input-section {
     background: v.$background-color;
     padding: 1.5rem;
@@ -123,11 +115,9 @@ body {
         padding: 0.75rem 1.875rem;
         font-weight: 600;
         font-size: 0.9375rem;
-        background: linear-gradient(
-          135deg,
-          v.$primary-color 0%,
-          darken(v.$primary-color, 15%) 100%
-        );
+        background: linear-gradient(135deg,
+            v.$primary-color 0%,
+            darken(v.$primary-color, 15%) 100%);
         transition: all 0.3s ease;
 
         &:hover {
@@ -142,7 +132,6 @@ body {
     }
   }
 
-  // Filter Section
   .filter-section {
     margin-bottom: 1.5rem;
 
@@ -172,7 +161,6 @@ body {
     }
   }
 
-  // Task List
   .work-list {
     list-style: none;
     padding: 0;
@@ -207,7 +195,6 @@ body {
         }
       }
 
-      // Task Content
       .task-content {
         flex: 1;
         min-width: 0;
@@ -263,7 +250,6 @@ body {
         }
       }
 
-      // Task Actions
       .task-actions {
         display: flex;
         gap: 0.5rem;
@@ -308,7 +294,6 @@ body {
       }
     }
 
-    // Empty State
     .list-group-item.text-center {
       padding: 3rem 1.5rem;
       border: 2px dashed v.$border-color;

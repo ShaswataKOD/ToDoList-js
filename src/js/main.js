@@ -3,7 +3,6 @@ import * as bootstrap from "bootstrap";
 import { getTasks, addTask, updateTask, deleteTask } from "./api.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-  
   const taskInput = document.getElementById("task-input");
   const tagsInput = document.getElementById("tags-input");
   const addButton = document.getElementById("add-button");
@@ -114,9 +113,15 @@ document.addEventListener("DOMContentLoaded", () => {
       const newTask = await addTask(title, priority, false, tags);
       tasks.push(newTask);
 
-      if (taskInput) taskInput.value = "";
-      if (tagsInput) tagsInput.value = "";
-      if (prioritySelect) prioritySelect.value = "Low";
+      if (taskInput) {
+        taskInput.value = "";
+      }
+      if (tagsInput) {
+        tagsInput.value = "";
+      }
+      if (prioritySelect) {
+        prioritySelect.value = "Low";
+      }
 
       taskInput?.focus();
       showMessage("Task added successfully!", "success");
@@ -129,7 +134,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   async function handleDeleteTask(id) {
-    if (!confirm("Are you sure you want to delete this task?")) return;
+    if (!confirm("Are you sure you want to delete this task?")) {
+      return;
+    }
 
     try {
       await deleteTask(id);
@@ -145,7 +152,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function handleEditTask(task) {
     const newTitle = prompt("Edit your task:", task.title);
-    if (newTitle === null) return;
+    if (newTitle === null) {
+      return;
+    }
 
     const newTagsRaw = prompt(
       "Edit tags (comma-separated):",
@@ -172,7 +181,9 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       const index = tasks.findIndex((t) => t._id === task._id);
-      if (index !== -1) tasks[index] = updatedTask;
+      if (index !== -1) {
+        tasks[index] = updatedTask;
+      }
 
       showMessage("Task updated successfully!", "success");
       displayAllTasks();
@@ -192,7 +203,9 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       const index = tasks.findIndex((t) => t._id === task._id);
-      if (index !== -1) tasks[index] = updatedTask;
+      if (index !== -1) {
+        tasks[index] = updatedTask;
+      }
 
       displayAllTasks();
     } catch (error) {

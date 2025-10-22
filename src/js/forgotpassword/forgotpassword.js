@@ -3,7 +3,6 @@
 import { showToast } from "../toast.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Step sections
   const emailStep = document.getElementById("step1");
   const otpStep = document.getElementById("step2");
   const passwordStep = document.getElementById("step3");
@@ -32,14 +31,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (res.ok && data.success) {
         emailGlobal = email;
+
         showToast(data.message, "success");
+
         emailStep.style.display = "none";
+
         otpStep.style.display = "block";
       } else {
         showToast(data.message || "Failed to send OTP", "error");
       }
     } catch (err) {
       showToast("Error sending OTP", "error");
+
       console.error(err);
     }
   });
@@ -67,14 +70,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (res.ok && data.success) {
           otpGlobal = otp;
+
           showToast(data.message, "success");
+
           otpStep.style.display = "none";
+
           passwordStep.style.display = "block";
         } else {
           showToast(data.message || "Invalid OTP", "error");
         }
       } catch (err) {
         showToast("Error verifying OTP", "error");
+
         console.error(err);
       }
     });
@@ -112,7 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
           passwordStep.style.display = "none";
 
-          window.location.href = "";
+          window.location.href = "/login.html";
         } else {
           showToast(data.message || "Failed to reset password", "error");
         }
