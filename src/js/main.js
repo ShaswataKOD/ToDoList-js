@@ -1,6 +1,7 @@
 import "../scss/styles.scss";
 import * as bootstrap from "bootstrap";
 import { getTasks, addTask, updateTask, deleteTask } from "./api.js";
+import handleLogOut from "./logout/logout.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const taskInput = document.getElementById("task-input");
@@ -14,6 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const profileBtn = document.getElementById("profileBtn");
   const profileDropdown = document.getElementById("profileDropdown");
   const resetPasswordBtn = document.getElementById("resetPasswordBtn");
+  const logOutBtn = document.getElementById("logOutBtn");
 
   if (profileBtn && profileDropdown) {
     profileBtn.addEventListener("click", (e) => {
@@ -32,6 +34,11 @@ document.addEventListener("DOMContentLoaded", () => {
       window.location.href = "./reset-password.html";
     });
   }
+
+  if (logOutBtn) {
+    logOutBtn.addEventListener("click", handleLogOut);
+  }
+  
   let tasks = [];
 
   init();

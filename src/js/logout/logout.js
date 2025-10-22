@@ -1,6 +1,8 @@
 import { showToast } from "../toast";
 
-document.getElementById("logoutBtn").addEventListener("click", () => {
+export function handleLogOut()
+{
+    document.getElementById("logoutBtn").addEventListener("click", () => {
   localStorage.removeItem("accessToken");
   localStorage.removeItem("refreshToken");
 
@@ -10,3 +12,6 @@ document.getElementById("logoutBtn").addEventListener("click", () => {
     window.location.href = "/pages/login.html";
   }, 1000);
 });
+}
+
+export default handleLogOut
