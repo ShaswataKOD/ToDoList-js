@@ -1,5 +1,5 @@
 import "../../scss/login/login.scss";
-import { showToast } from "../toast.js";
+import showToast from "../toast";
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("loginForm");
@@ -27,12 +27,14 @@ document.addEventListener("DOMContentLoaded", () => {
       if (data.accessToken && data.refreshToken) {
         localStorage.setItem("accessToken", data.accessToken);
         localStorage.setItem("refreshToken", data.refreshToken);
-        console.log(data.accessToken);
-        console.log(data.refreshToken);
 
         showToast("Login successful!", "success");
 
-        window.location.href = "index.html";
+        const toastContainer = document.getElementById("toastContainer");
+
+        toastContainer.addEventListener("hidden.bs.toast", () => {
+          window.location.href = "index.html";
+        });
       } else {
         showToast(data.message || "Login failed", "error");
       }

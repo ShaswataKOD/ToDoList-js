@@ -32,7 +32,12 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       showToast("Account created successfully!", "success");
-      window.location.href = "../pages/verifyUser.html";
+
+      const toastContainer = document.querySelector("toastContainer");
+
+      toastContainer.addEventListener("hidden.bs.toast", () => {
+        window.location.href = "../pages/verifyUser.html";
+      });
     } catch (err) {
       console.error("Signup error:", err);
       showToast(

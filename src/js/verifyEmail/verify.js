@@ -56,23 +56,20 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await response.json();
 
       if (data.success) {
-        showToast("User verified successfully!", "success", 2000);
+        showToast("User verified successfully!", "success");
 
-        window.location.href = "./login.html";
+        const toastContainer = document.querySelector("toastContainer");
+
+        toastContainer.addEventListener("hidden.bs.toast", () => {
+          window.location.href = "./login.html";
+        });
       } else {
         showToast(data.message || "Verification failed", "error");
       }
     } catch (err) {
       console.error("Verify error:", err);
+
       showToast("Error verifying user. Please try again.", "error");
     }
-  });
-
-  skipBtn.addEventListener("click", () => {
-    showToast("Verification skipped", "info", 1500);
-
-    setTimeout(() => {
-      window.location.href = "./login.html";
-    }, 1500);
   });
 });

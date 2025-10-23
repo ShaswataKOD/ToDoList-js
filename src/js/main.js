@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const profileBtn = document.getElementById("profileBtn");
   const profileDropdown = document.getElementById("profileDropdown");
   const resetPasswordBtn = document.getElementById("resetPasswordBtn");
-  const logOutBtn = document.getElementById("logOutBtn");
+  const logoutBtn = document.getElementById("logoutBtn");
 
   if (profileBtn && profileDropdown) {
     profileBtn.addEventListener("click", (e) => {
@@ -35,10 +35,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  if (logOutBtn) {
-    logOutBtn.addEventListener("click", handleLogOut);
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", handleLogOut);
   }
-  
+
   let tasks = [];
 
   init();

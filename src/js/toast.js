@@ -5,9 +5,11 @@ import * as bootstrap from "bootstrap";
  * @param {string} type
  * @param {number} delay
  */
-export function showToast(message, type = "info", delay = 3000) {
+export function showToast(message, type = "info", delay = 2000) {
   const container = document.getElementById("toastContainer");
-  if (!container) return;
+  if (!container) {
+    return;
+  }
 
   const bgClass =
     type === "success"
@@ -17,6 +19,7 @@ export function showToast(message, type = "info", delay = 3000) {
       : "bg-info text-white";
 
   const toastEl = document.createElement("div");
+
   toastEl.className = `toast align-items-center ${bgClass} border-0`;
   toastEl.setAttribute("role", "alert");
   toastEl.setAttribute("aria-live", "assertive");
@@ -36,3 +39,5 @@ export function showToast(message, type = "info", delay = 3000) {
 
   toastEl.addEventListener("hidden.bs.toast", () => toastEl.remove());
 }
+
+export default showToast;

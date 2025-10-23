@@ -49,7 +49,11 @@ document.addEventListener("DOMContentLoaded", () => {
       if (data.success) {
         showToast("Password reset successfully!", "success");
 
-        window.location.href = "./login.html";
+        const toastContainer = document.querySelector("toastContainer");
+
+        toastContainer.addEventListener("hidden.bs.toast", () => {
+          window.location.href = "/pages/login.html";
+        });
       } else {
         showToast(data.message || "Password reset failed", "error");
       }
