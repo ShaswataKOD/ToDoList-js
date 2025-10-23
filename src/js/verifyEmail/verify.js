@@ -1,10 +1,12 @@
 import "../../scss/verifyotp/verify.scss";
 import { showToast } from "../toast.js";
+import { emailHandler } from "./emailHandler.js";
+
+const { form, sendOtpBtn } = emailHandler;
 
 document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("verifyForm");
-  const sendOtpBtn = document.getElementById("sendOtpBtn");
-  const skipBtn = document.getElementById("skipBtn");
+  // const form = document.getElementById("verifyForm");
+  // const sendOtpBtn = document.getElementById("sendOtpBtn");
 
   sendOtpBtn.addEventListener("click", async () => {
     const email = document.getElementById("email").value.trim();
@@ -58,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (data.success) {
         showToast("User verified successfully!", "success");
 
-        const toastContainer = document.querySelector("toastContainer");
+        const toastContainer = document.querySelector("#toastContainer");
 
         toastContainer.addEventListener("hidden.bs.toast", () => {
           window.location.href = "./login.html";

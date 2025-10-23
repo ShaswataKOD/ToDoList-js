@@ -1,21 +1,36 @@
 import "../scss/styles.scss";
-import * as bootstrap from "bootstrap";
 import { getTasks, addTask, updateTask, deleteTask } from "./api.js";
 import handleLogOut from "./logout/logout.js";
+import { domSelectors } from "./mainQueryHandler.js";
+const {
+  taskInput,
+  tagsInput,
+  addButton,
+  workList,
+  prioritySelect,
+  searchPriority,
+  searchTags,
+  searchTitle,
+  profileBtn,
+  profileDropdown,
+  resetPasswordBtn,
+  logoutBtn,
+} = domSelectors;
+import showMessage from "./showMessage.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-  const taskInput = document.getElementById("task-input");
-  const tagsInput = document.getElementById("tags-input");
-  const addButton = document.getElementById("add-button");
-  const workList = document.getElementById("work-list");
-  const prioritySelect = document.getElementById("priority-select");
-  const searchPriority = document.getElementById("search-priority");
-  const searchTags = document.getElementById("search-tags");
-  const searchTitle = document.getElementById("search-title");
-  const profileBtn = document.getElementById("profileBtn");
-  const profileDropdown = document.getElementById("profileDropdown");
-  const resetPasswordBtn = document.getElementById("resetPasswordBtn");
-  const logoutBtn = document.getElementById("logoutBtn");
+  // const taskInput = document.getElementById("task-input");
+  // const tagsInput = document.getElementById("tags-input");
+  // const addButton = document.getElementById("add-button");
+  // const workList = document.getElementById("work-list");
+  // const prioritySelect = document.getElementById("priority-select");
+  // const searchPriority = document.getElementById("search-priority");
+  // const searchTags = document.getElementById("search-tags");
+  // const searchTitle = document.getElementById("search-title");
+  // const profileBtn = document.getElementById("profileBtn");
+  // const profileDropdown = document.getElementById("profileDropdown");
+  // const resetPasswordBtn = document.getElementById("resetPasswordBtn");
+  // const logoutBtn = document.getElementById("logoutBtn");
 
   if (profileBtn && profileDropdown) {
     profileBtn.addEventListener("click", (e) => {
@@ -289,22 +304,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     tasks.forEach((task) => workList.appendChild(createTaskElement(task)));
-  }
-
-  function showMessage(msg, type = "info") {
-    const alert = document.createElement("div");
-    alert.className = `alert alert-${type} alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3`;
-    alert.style.minWidth = "300px";
-    alert.innerHTML = `
-      <span>${msg}</span>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    `;
-    document.body.appendChild(alert);
-
-    setTimeout(() => {
-      alert.classList.remove("show");
-      setTimeout(() => alert.remove(), 150);
-    }, 2500);
   }
 
   function escapeHtml(text) {

@@ -1,15 +1,22 @@
 import "../../scss/signup/signup.scss";
 import { showToast } from "../toast.js";
 
+import { signupSelectors } from "./signupHandler.js";
+
 document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("signupForm");
+  const { nameInput, emailInput, passwordInput, form } = signupSelectors;
+  // const form = document.getElementById("signupForm");
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const name = document.getElementById("username").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value.trim();
+    // const name = document.getElementById("username").value.trim();
+    // const email = document.getElementById("email").value.trim();
+    // const password = document.getElementById("password").value.trim();
+
+    const name = signupSelectors.nameInput.value.trim();
+    const email = signupSelectors.emailInput.value.trim();
+    const password = signupSelectors.passwordInput.value.trim();
 
     if (!name || !email || !password) {
       showToast("Please fill in all fields", "error");
@@ -33,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       showToast("Account created successfully!", "success");
 
-      const toastContainer = document.querySelector("toastContainer");
+      const toastContainer = document.querySelector("#toastContainer");
 
       toastContainer.addEventListener("hidden.bs.toast", () => {
         window.location.href = "../pages/verifyUser.html";

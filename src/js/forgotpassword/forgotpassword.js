@@ -1,15 +1,26 @@
 // import "../../scss/forgotpassword.scss";
 
 import { showToast } from "../toast.js";
+import { forgotPasswordHandler } from "./forgotPasswordHandler.js";
+
+const {
+  emailStep,
+  emailInput,
+  otpStep,
+  otpInput,
+  passwordStep,
+  currentPasswordInput,
+  newPasswordInput,
+} = forgotPasswordHandler;
 
 document.addEventListener("DOMContentLoaded", () => {
-  const emailStep = document.getElementById("step1");
-  const otpStep = document.getElementById("step2");
-  const passwordStep = document.getElementById("step3");
-  const emailInput = document.getElementById("email");
-  const otpInput = document.getElementById("otp");
-  const currentPasswordInput = document.getElementById("currentPassword");
-  const newPasswordInput = document.getElementById("newPassword");
+  // const emailStep = document.getElementById("step1");
+  // const otpStep = document.getElementById("step2");
+  // const passwordStep = document.getElementById("step3");
+  // const emailInput = document.getElementById("email");
+  // const otpInput = document.getElementById("otp");
+  // const currentPasswordInput = document.getElementById("currentPassword");
+  // const newPasswordInput = document.getElementById("newPassword");
 
   let emailGlobal = "";
   let otpGlobal = "";
