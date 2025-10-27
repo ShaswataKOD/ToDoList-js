@@ -15,6 +15,7 @@ const {
   profileDropdown,
   resetPasswordBtn,
   logoutBtn,
+  editProfileBtn,
 } = domSelectors;
 import showMessage from "./showMessage.js";
 
@@ -40,6 +41,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.addEventListener("click", () => {
       profileDropdown.classList.remove("show");
+    });
+  }
+
+  if (editProfileBtn) {
+    editProfileBtn.addEventListener("click", () => {
+      window.location.href = "/pages/profile.html";
     });
   }
 

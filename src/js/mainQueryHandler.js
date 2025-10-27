@@ -11,4 +11,5 @@ export const domSelectors = {
   profileDropdown: document.getElementById("profileDropdown"),
   resetPasswordBtn: document.getElementById("resetPasswordBtn"),
   logoutBtn: document.getElementById("logoutBtn"),
+  editProfileBtn : document.getElementById("editProfileBtn")
 };

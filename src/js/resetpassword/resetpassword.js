@@ -30,7 +30,8 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
     const token = localStorage.getItem("accessToken");
-    console.log("the current access tokken is ", token);
+
+    console.log("the current token is ", token);
     try {
       const response = await fetch(
         "http://localhost:5000/api/auth/reset-password",
@@ -41,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
             Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify({
-            oldPassword,
+            currentPassword: oldPassword,
             newPassword,
           }),
         }
@@ -52,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (data.success) {
         showToast("Password reset successfully!", "success");
 
-        const toastContainer = document.querySelector("toastContainer");
+        const toastContainer = document.querySelector("#toastContainer");
 
         toastContainer.addEventListener("hidden.bs.toast", () => {
           window.location.href = "/pages/login.html";
@@ -62,6 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     } catch (err) {
       console.error("Reset password error:", err);
+
       showToast("An error occurred. Please try again later.", "error");
     }
   });
