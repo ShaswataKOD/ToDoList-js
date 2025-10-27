@@ -7,37 +7,40 @@ document.addEventListener("DOMContentLoaded", () => {
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const email = document.getElementById("email").value.trim();
+    // const email = document.getElementById("email").value.trim();
     const oldPassword = document.getElementById("oldPassword").value.trim();
     const newPassword = document.getElementById("newPassword").value.trim();
-    const confirmPassword = document
-      .getElementById("confirmPassword")
-      .value.trim();
+    // const confirmPassword = document
+    //   .getElementById("confirmPassword")
+    //   .value.trim();
 
     // Basic validation
-    if (!email || !oldPassword || !newPassword || !confirmPassword) {
+    if (!oldPassword || !newPassword) {
       showToast("Please fill in all fields", "error");
       return;
     }
 
-    if (newPassword !== confirmPassword) {
-      showToast("New passwords do not match", "error");
-      return;
-    }
+    // if (newPassword !== confirmPassword) {
+    //   showToast("New passwords do not match", "error");
+    //   return;
+    // }
 
     if (newPassword === oldPassword) {
       showToast("New password must be different from old password", "error");
       return;
     }
-
+    const token = localStorage.getItem("accessToken");
+    console.log("the current access tokken is ", token);
     try {
       const response = await fetch(
         "http://localhost:5000/api/auth/reset-password",
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
           body: JSON.stringify({
-            email,
             oldPassword,
             newPassword,
           }),

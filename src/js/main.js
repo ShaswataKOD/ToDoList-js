@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (resetPasswordBtn) {
     resetPasswordBtn.addEventListener("click", () => {
       alert("Redirecting to Reset Password page...");
-      window.location.href = "./reset-password.html";
+      window.location.href = "./resetpassword.html";
     });
   }
 
