@@ -29,12 +29,11 @@
 
       <div class="profile-image text-center mb-4">
         <img id="profilePic" src="default-profile.jpg" alt="Profile Image" />
-        <input
-          type="file"
-          id="imageUpload"
-          accept="image/*"
-          class="form-control"
-        />
+        <br />
+        <label for="imageUpload" class="btn btn-outline-primary mt-2">
+          Choose Photo
+        </label>
+        <input type="file" id="imageUpload" accept="image/*" hidden />
       </div>
 
       <form id="profileForm">
@@ -44,22 +43,9 @@
             class="form-control"
             id="username"
             placeholder="Username"
-            value="John Doe"
             required
           />
           <label for="username">Username</label>
-        </div>
-
-        <div class="form-floating mb-3">
-          <input
-            type="email"
-            class="form-control"
-            id="email"
-            placeholder="name@example.com"
-            value="johndoe@example.com"
-            required
-          />
-          <label for="email">Email address</label>
         </div>
 
         <div class="d-grid mt-3">
