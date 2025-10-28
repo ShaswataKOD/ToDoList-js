@@ -1,22 +1,52 @@
-import "../api.js"; // ✅ Import fetch interceptor
+import "../api.js"; 
 import "../../scss/profile/profile.scss";
 import { showToast } from "../toast.js";
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   const profileForm = document.getElementById("profileForm");
   const imageUpload = document.getElementById("imageUpload");
   const profilePic = document.getElementById("profilePic");
   const usernameInput = document.getElementById("username");
 
-  const savedUsername = localStorage.getItem("username");
-  const savedProfileImage = localStorage.getItem("profileImage");
+  const token = localStorage.getItem("accessToken");
 
-  if (savedUsername) usernameInput.value = savedUsername;
-  if (savedProfileImage) profilePic.src = savedProfileImage;
+  if (!token) {
+    window.location.href = "pages/login.html";
+    return;
+  }
 
-  let uploadedImageBase64 = savedProfileImage || "";
+  let uploadedImageBase64 = "";
 
-  // Handle image upload
+  async function loadUserProfile() {
+    try {
+      const response = await fetch("http://localhost:5000/api/auth/me", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) throw new Error("Failed to fetch profile");
+
+      const data = await response.json();
+      const user = data.user;
+
+      usernameInput.value = user.username || "";
+      profilePic.src = user.profileImage || "default-profile.jpg";
+
+      uploadedImageBase64 = user.profileImage || "";
+
+      
+      localStorage.setItem("username", user.username);
+      localStorage.setItem("profileImage", user.profileImage);
+    } catch (error) {
+      console.error("Error fetching profile:", error);
+      showToast("Error loading profile", "error");
+    }
+  }
+
+  await loadUserProfile();
+
+  
   imageUpload.addEventListener("change", (event) => {
     const file = event.target.files[0];
     if (file && file.type.startsWith("image/")) {
@@ -35,7 +65,6 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
 
     const username = usernameInput.value.trim();
-    const token = localStorage.getItem("accessToken");
 
     if (!username) {
       showToast("Username is required!", "error");
@@ -54,17 +83,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const data = await response.json();
 
-      if (!response.ok)
-        throw new Error(data.message || "Failed to update profile");
+      if (!response.ok) throw new Error(data.message || "Failed to update profile");
 
       localStorage.setItem("username", data.user.username);
       localStorage.setItem("profileImage", data.user.profileImage);
 
       showToast("Profile updated successfully!", "success");
-
-      setTimeout(() => {
-        window.location.href = "pages/login.html";
-      }, 1500);
     } catch (error) {
       console.error(error);
       showToast("Error updating profile!", "error");
