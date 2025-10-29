@@ -1,5 +1,5 @@
 import "../../scss/verifyotp/verify.scss";
-import { showToast } from "../toast.js";
+import { showToast } from "../utils/toast.js";
 import { emailHandler } from "./emailHandler.js";
 
 const { form, sendOtpBtn } = emailHandler;

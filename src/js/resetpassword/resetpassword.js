@@ -1,5 +1,5 @@
 import "../../scss/resetpassword/resetpassword.scss";
-import { showToast } from "../toast";
+import { showToast } from "../utils/toast.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("resetPasswordForm");

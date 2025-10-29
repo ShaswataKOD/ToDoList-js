@@ -1,4 +1,4 @@
-import { showToast } from "../toast";
+import { showToast } from "../utils/toast.js";
 
 export function handleLogOut() {
   document.getElementById("logoutBtn").addEventListener("click", () => {

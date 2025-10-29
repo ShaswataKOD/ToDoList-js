@@ -1,6 +1,6 @@
-import "../api.js"; 
+import "../api.js";
 import "../../scss/profile/profile.scss";
-import { showToast } from "../toast.js";
+import { showToast } from "../utils/toast.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
   const profileForm = document.getElementById("profileForm");
@@ -35,7 +35,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       uploadedImageBase64 = user.profileImage || "";
 
-      
       localStorage.setItem("username", user.username);
       localStorage.setItem("profileImage", user.profileImage);
     } catch (error) {
@@ -46,7 +45,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   await loadUserProfile();
 
-  
   imageUpload.addEventListener("change", (event) => {
     const file = event.target.files[0];
     if (file && file.type.startsWith("image/")) {
@@ -83,7 +81,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       const data = await response.json();
 
-      if (!response.ok) throw new Error(data.message || "Failed to update profile");
+      if (!response.ok)
+        throw new Error(data.message || "Failed to update profile");
 
       localStorage.setItem("username", data.user.username);
       localStorage.setItem("profileImage", data.user.profileImage);

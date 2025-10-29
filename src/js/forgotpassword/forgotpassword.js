@@ -1,6 +1,6 @@
 // import "../../scss/forgotpassword.scss";
 
-import { showToast } from "../toast.js";
+import { showToast } from "../utils/toast.js";
 import { forgotPasswordHandler } from "./forgotPasswordHandler.js";
 
 const {

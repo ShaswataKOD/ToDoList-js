@@ -1,5 +1,5 @@
 import "../../scss/signup/signup.scss";
-import { showToast } from "../toast.js";
+import { showToast } from "../utils/toast.js";
 
 import { signupSelectors } from "./signupHandler.js";
 
