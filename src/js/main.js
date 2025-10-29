@@ -1,6 +1,6 @@
 import "../scss/styles.scss";
 import { getTasks, addTask, updateTask, deleteTask } from "./api.js";
-import handleLogOut from "./logout/logout.js";
+// import handleLogOut from "./logout/logout.js";
 import { domSelectors } from "./mainQueryHandler.js";
 const {
   taskInput,
@@ -18,6 +18,8 @@ const {
   editProfileBtn,
 } = domSelectors;
 import showMessage from "./showMessage.js";
+import { escapeHtml, debounce } from "./utils/utilityFunctions.js";
+import { profileHandlers } from "./utils/profileHandler.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   // const taskInput = document.getElementById("task-input");
@@ -33,33 +35,33 @@ document.addEventListener("DOMContentLoaded", () => {
   // const resetPasswordBtn = document.getElementById("resetPasswordBtn");
   // const logoutBtn = document.getElementById("logoutBtn");
 
-  if (profileBtn && profileDropdown) {
-    profileBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      profileDropdown.classList.toggle("show");
-    });
+  // if (profileBtn && profileDropdown) {
+  //   profileBtn.addEventListener("click", (e) => {
+  //     e.stopPropagation();
+  //     profileDropdown.classList.toggle("show");
+  //   });
 
-    document.addEventListener("click", () => {
-      profileDropdown.classList.remove("show");
-    });
-  }
+  //   document.addEventListener("click", () => {
+  //     profileDropdown.classList.remove("show");
+  //   });
+  // }
 
-  if (editProfileBtn) {
-    editProfileBtn.addEventListener("click", () => {
-      window.location.href = "/pages/profile.html";
-    });
-  }
+  // if (editProfileBtn) {
+  //   editProfileBtn.addEventListener("click", () => {
+  //     window.location.href = "/pages/profile.html";
+  //   });
+  // }
 
-  if (resetPasswordBtn) {
-    resetPasswordBtn.addEventListener("click", () => {
-      alert("Redirecting to Reset Password page...");
-      window.location.href = "./resetpassword.html";
-    });
-  }
+  // if (resetPasswordBtn) {
+  //   resetPasswordBtn.addEventListener("click", () => {
+  //     alert("Redirecting to Reset Password page...");
+  //     window.location.href = "./resetpassword.html";
+  //   });
+  // }
 
-  if (logoutBtn) {
-    logoutBtn.addEventListener("click", handleLogOut);
-  }
+  // if (logoutBtn) {
+  //   logoutBtn.addEventListener("click", handleLogOut);
+  // }
 
   let tasks = [];
 
@@ -111,13 +113,13 @@ document.addEventListener("DOMContentLoaded", () => {
     displayAllTasks();
   }
 
-  function debounce(fn, delay) {
-    let timeout;
-    return (...args) => {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => fn(...args), delay);
-    };
-  }
+  // function debounce(fn, delay) {
+  //   let timeout;
+  //   return (...args) => {
+  //     clearTimeout(timeout);
+  //     timeout = setTimeout(() => fn(...args), delay);
+  //   };
+  // }
 
   async function handleAddTask() {
     const title = taskInput?.value.trim();
@@ -313,9 +315,9 @@ document.addEventListener("DOMContentLoaded", () => {
     tasks.forEach((task) => workList.appendChild(createTaskElement(task)));
   }
 
-  function escapeHtml(text) {
-    const div = document.createElement("div");
-    div.textContent = text;
-    return div.innerHTML;
-  }
+  // function escapeHtml(text) {
+  //   const div = document.createElement("div");
+  //   div.textContent = text;
+  //   return div.innerHTML;
+  // }
 });
